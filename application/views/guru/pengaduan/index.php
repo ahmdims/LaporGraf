@@ -1,9 +1,9 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Daftar Pengaduan Saya</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Daftar Pengaduan Saya (Guru)</h6>
     </div>
     <div class="card-body">
-        <a href="<?= site_url('siswa/pengaduan/create'); ?>" class="btn btn-primary mb-3"><i class="fas fa-plus"></i>
+        <a href="<?= site_url('guru/pengaduan/create'); ?>" class="btn btn-primary mb-3"><i class="fas fa-plus"></i>
             Buat Pengaduan Baru</a>
 
         <?php if ($this->session->flashdata('success')): ?>
@@ -50,11 +50,11 @@
                             </td>
                             <td>
                                 <?php if ($p->konfirmasi == '0'): ?>
-                                    <a href="<?= site_url('siswa/pengaduan/edit/' . $p->id_pengaduan); ?>"
+                                    <a href="<?= site_url('guru/pengaduan/edit/' . $p->id_pengaduan); ?>"
                                         class="btn btn-sm btn-info" title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="<?= site_url('siswa/pengaduan/delete/' . $p->id_pengaduan); ?>"
+                                    <a href="<?= site_url('guru/pengaduan/delete/' . $p->id_pengaduan); ?>"
                                         class="btn btn-sm btn-danger"
                                         onclick="return confirm('Yakin ingin menghapus pengaduan ini?');" title="Hapus">
                                         <i class="fas fa-trash"></i>

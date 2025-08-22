@@ -11,6 +11,7 @@ class Pengaduan_model extends CI_Model
         $this->db->from('pengaduan p');
         $this->db->join('kategori k', 'p.id_kategori = k.id_kategori');
         $this->db->where('p.user_id', $userId);
+        $this->db->order_by('p.date', 'DESC');
         return $this->db->get()->result();
     }
 
@@ -26,24 +27,32 @@ class Pengaduan_model extends CI_Model
         return $this->db->insert('pengaduan', $data);
     }
 
-    // Update an existing complaint
+    // Update an existing complaint by its ID
     public function update($id, $data)
     {
-        return $this->db->update('pengaduan', $data, ['id_pengaduan' => $id]);
+        $this->db->where('id_pengaduan', $id);
+        return $this->db->update('pengaduan', $data);
     }
 
-    // Delete a complaint
+    // Delete a complaint by its ID
     public function delete($id)
     {
-        return $this->db->delete('pengaduan', ['id_pengaduan' => $id]);
+        $this->db->where('id_pengaduan', $id);
+        return $this->db->delete('pengaduan');
     }
-}
 
-// You also need a Kategori_model.php to fetch categories
-class Kategori_model extends CI_Model
-{
-    public function get_all()
+    /**
+     * FUNGSI BARU: Memeriksa apakah user adalah pemilik pengaduan
+     * dan apakah statusnya masih '0' (belum dikonfirmasi).
+     * @param int $id ID Pengaduan
+     * @param string $userId ID User (Siswa/Guru)
+     * @return object|null Mengembalikan data pengaduan jika valid, null jika tidak.
+     */
+    public function get_valid_pengaduan_for_edit_delete($id, $userId)
     {
-        return $this->db->get('kategori')->result();
+        $this->db->where('id_pengaduan', $id);
+        $this->db->where('user_id', $userId);
+        $this->db->where('konfirmasi', '0'); // Hanya yang belum dikonfirmasi
+        return $this->db->get('pengaduan')->row();
     }
 }
