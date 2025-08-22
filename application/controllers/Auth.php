@@ -8,7 +8,6 @@ class Auth extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Auth_model');
-        // Baris ini memuat library form_validation dan helper url yang akan kita butuhkan
         $this->load->library('form_validation');
         $this->load->helper('url');
     }
@@ -36,15 +35,18 @@ class Auth extends CI_Controller
             $user = $this->Auth_model->login($userId, $password);
 
             if ($user) {
+                $keterangan = isset($user->keterangan) ? $user->keterangan : null;
+
                 $session_data = array(
                     'user_id' => $user->user_id,
                     'nama' => $user->nama,
                     'role' => $user->role,
+                    'keterangan' => $keterangan,
                     'is_logged_in' => TRUE
                 );
+
                 $this->session->set_userdata($session_data);
 
-                // Redirect based on role
                 switch ($user->role) {
                     case 'Admin':
                         redirect('admin/dashboard');
@@ -69,42 +71,30 @@ class Auth extends CI_Controller
         }
     }
 
-    /**
-     * FUNGSI BARU UNTUK MENAMPILKAN HALAMAN REGISTRASI
-     */
     public function register()
     {
-        // Fungsi ini hanya akan memuat view register.
         $this->load->view('register_view');
     }
 
-    /**
-     * FUNGSI BARU UNTUK MEMPROSES DATA DARI FORM REGISTRASI
-     */
     public function process_register()
     {
-        // Atur aturan validasi untuk form registrasi
         $this->form_validation->set_rules('user_id', 'User ID (NIS)', 'required|trim|is_unique[siswa.user_id]');
         $this->form_validation->set_rules('nama', 'Nama Lengkap', 'required|trim');
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[5]');
 
         if ($this->form_validation->run() == FALSE) {
-            // Jika validasi gagal, tampilkan kembali form registrasi dengan pesan error
             $this->load->view('register_view');
         } else {
-            // Jika validasi berhasil, siapkan data untuk disimpan
             $data = [
                 'user_id' => htmlspecialchars($this->input->post('user_id', true)),
                 'nama' => htmlspecialchars($this->input->post('nama', true)),
                 'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-                'role' => 'Siswa', // Role default untuk registrasi
-                'keterangan' => 'Siswa'  // Keterangan default
+                'role' => 'Siswa',
+                'keterangan' => 'Siswa'
             ];
 
-            // Panggil model untuk menyimpan data
             $this->Auth_model->register_siswa($data);
 
-            // Beri pesan sukses dan arahkan ke halaman login
             $this->session->set_flashdata('success', 'Registrasi berhasil! Silakan login.');
             redirect('auth');
         }
