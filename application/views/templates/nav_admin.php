@@ -6,9 +6,14 @@
 <hr class="sidebar-divider">
 <div class="sidebar-heading">Setup Data</div>
 <li class="nav-item">
-    <a class="nav-link" href="#">
+    <a class="nav-link" href="<?= site_url('admin/kategori'); ?>">
         <i class="fas fa-fw fa-tags"></i>
         <span>Setup Kategori</span></a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="<?= site_url('admin/status'); ?>">
+        <i class="fas fa-fw fa-check-circle"></i>
+        <span>Setup Status</span></a>
 </li>
 <li class="nav-item">
     <a class="nav-link" href="#">
