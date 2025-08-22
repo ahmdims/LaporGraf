@@ -50,6 +50,10 @@
                             </td>
                             <td>
                                 <?php if ($p->konfirmasi == '0'): ?>
+                                    <a href="<?= site_url('siswa/pengaduan/detail/' . $p->id_pengaduan); ?>"
+                                        class="btn btn-sm btn-primary">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
                                     <a href="<?= site_url('siswa/pengaduan/edit/' . $p->id_pengaduan); ?>"
                                         class="btn btn-sm btn-info" title="Edit">
                                         <i class="fas fa-edit"></i>
@@ -60,6 +64,10 @@
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 <?php else: ?>
+                                    <a href="<?= site_url('siswa/pengaduan/detail/' . $p->id_pengaduan); ?>"
+                                        class="btn btn-sm btn-primary">
+                                        <i class="fas fa-eye"></i> Lihat Detail
+                                    </a>
                                     <button class="btn btn-sm btn-secondary" disabled>Terkunci</button>
                                 <?php endif; ?>
                             </td>

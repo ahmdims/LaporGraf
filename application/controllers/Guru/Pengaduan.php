@@ -12,6 +12,7 @@ class Pengaduan extends CI_Controller
         }
         $this->load->model('Pengaduan_model');
         $this->load->model('Kategori_model');
+        $this->load->model('Kepuasan_model');
     }
 
     public function index()
@@ -38,7 +39,9 @@ class Pengaduan extends CI_Controller
     public function store()
     {
         $this->form_validation->set_rules('judul', 'Judul', 'required');
-        // ... (validasi lainnya sama seperti siswa)
+        $this->form_validation->set_rules('deskripsi', 'Deskripsi', 'required');
+        $this->form_validation->set_rules('id_kategori', 'Kategori', 'required');
+        $this->form_validation->set_rules('tempat', 'Tempat', 'required');
 
         if ($this->form_validation->run() == FALSE) {
             $this->create();
@@ -59,7 +62,50 @@ class Pengaduan extends CI_Controller
         }
     }
 
-    // Edit, Update, Delete sama persis dengan Siswa, hanya beda redirect path
+    public function detail($id_pengaduan)
+    {
+        $data['title'] = 'Detail Pengaduan';
+        $user_id = $this->session->userdata('user_id');
+
+        $data['pengaduan'] = $this->Pengaduan_model->get_pengaduan_detail_for_user($id_pengaduan, $user_id);
+
+        if (!$data['pengaduan']) {
+            $this->session->set_flashdata('error', 'Pengaduan tidak ditemukan.');
+            redirect('guru/pengaduan');
+        }
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('guru/pengaduan/detail', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function beri_kepuasan($id_balasan)
+    {
+        $this->form_validation->set_rules('rating', 'Rating', 'required|integer|greater_than[0]|less_than[6]');
+        $this->form_validation->set_rules('komentar', 'Komentar', 'required');
+
+        $id_pengaduan = $this->input->post('id_pengaduan');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->detail($id_pengaduan);
+        } else {
+            if ($this->Kepuasan_model->sudah_ada_kepuasan($id_balasan)) {
+                $this->session->set_flashdata('error', 'Anda sudah memberikan feedback untuk tanggapan ini.');
+            } else {
+                $data = [
+                    'id_balasan' => $id_balasan,
+                    'id_kategori' => $this->input->post('id_kategori'),
+                    'user_id' => $this->session->userdata('user_id'),
+                    'komentar' => $this->input->post('komentar'),
+                    'rating' => $this->input->post('rating')
+                ];
+                $this->Kepuasan_model->insert($data);
+                $this->session->set_flashdata('success', 'Terima kasih atas feedback Anda!');
+            }
+            redirect('guru/pengaduan/detail/' . $id_pengaduan);
+        }
+    }
+
     public function edit($id)
     {
         $userId = $this->session->userdata('user_id');
@@ -86,13 +132,11 @@ class Pengaduan extends CI_Controller
 
         if (!$pengaduan) {
             $this->session->set_flashdata('error', 'Gagal memperbarui: Pengaduan tidak ditemukan atau sudah ditanggapi.');
-            redirect('guru/pengaduan');
+            redirect('siswa/pengaduan');
         }
 
-        // ... (validasi sama)
         $this->form_validation->set_rules('judul', 'Judul', 'required');
         $this->form_validation->set_rules('deskripsi', 'Deskripsi', 'required');
-
 
         if ($this->form_validation->run() == FALSE) {
             $this->edit($id);

@@ -55,4 +55,37 @@ class Pengaduan_model extends CI_Model
         $this->db->where('konfirmasi', '0'); // Hanya yang belum dikonfirmasi
         return $this->db->get('pengaduan')->row();
     }
+
+    /**
+     * FUNGSI BARU: Mengambil detail lengkap pengaduan untuk user.
+     * Termasuk data balasan dan kepuasan.
+     * @param int $id_pengaduan
+     * @param string $user_id
+     * @return object|null
+     */
+    public function get_pengaduan_detail_for_user($id_pengaduan, $user_id)
+    {
+        // Pertama, pastikan user ini adalah pemilik pengaduan
+        $this->db->where('id_pengaduan', $id_pengaduan);
+        $this->db->where('user_id', $user_id);
+        $pengaduan = $this->db->get('pengaduan')->row();
+
+        if ($pengaduan) {
+            // Jika pengaduan valid, ambil balasannya
+            $this->db->where('id_pengaduan', $id_pengaduan);
+            $balasan_query = $this->db->get('balasan');
+            $pengaduan->balasan = $balasan_query->result();
+
+            // Untuk setiap balasan, cek apakah sudah ada data kepuasan
+            if ($pengaduan->balasan) {
+                foreach ($pengaduan->balasan as $key => $balas) {
+                    $this->db->where('id_balasan', $balas->id_balasan);
+                    $kepuasan_query = $this->db->get('kepuasan');
+                    $pengaduan->balasan[$key]->kepuasan = $kepuasan_query->row();
+                }
+            }
+        }
+
+        return $pengaduan;
+    }
 }
