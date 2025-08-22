@@ -5,7 +5,7 @@ class Status_model extends CI_Model
 {
 
     /**
-     * Mengambil semua data dari tabel 'status'
+     * Mengambil semua data dari tabel 'status' (Fungsi yang hilang)
      * @return array
      */
     public function get_all()
@@ -14,13 +14,34 @@ class Status_model extends CI_Model
     }
 
     /**
-     * FUNGSI BARU: Mengambil status berdasarkan unit petugas
+     * Mengambil status berdasarkan unit petugas
      * @param string $petugas Keterangan unit (e.g., 'Sarpras')
      * @return array
      */
     public function get_by_petugas($petugas)
     {
-        $this->db->where('petugas', $petugas);
-        return $this->db->get('status')->result();
+        return $this->db->get_where('status', ['petugas' => $petugas])->result();
+    }
+
+    public function get_by_id_and_petugas($id, $petugas)
+    {
+        return $this->db->get_where('status', ['id_status' => $id, 'petugas' => $petugas])->row();
+    }
+
+    public function insert($data)
+    {
+        return $this->db->insert('status', $data);
+    }
+
+    public function update($id, $data)
+    {
+        $this->db->where('id_status', $id);
+        return $this->db->update('status', $data);
+    }
+
+    public function delete($id)
+    {
+        $this->db->where('id_status', $id);
+        return $this->db->delete('status');
     }
 }

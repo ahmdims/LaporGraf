@@ -20,3 +20,9 @@
         <i class="fas fa-fw fa-tags"></i>
         <span>Kelola Kategori Unit</span></a>
 </li>
+
+<li class="nav-item">
+    <a class="nav-link" href="<?= site_url('manajemen/status'); ?>">
+        <i class="fas fa-fw fa-check-circle"></i>
+        <span>Kelola Status Unit</span></a>
+</li>
