@@ -32,7 +32,8 @@ class Pengaduan extends CI_Controller
         $data['title'] = 'Detail dan Tanggapan Pengaduan';
         $unit = $this->session->userdata('keterangan');
         $data['pengaduan'] = $this->Manajemen_model->get_pengaduan_detail($id_pengaduan, $unit);
-        $data['status_list'] = $this->Status_model->get_all();
+
+        $data['status_list'] = $this->Status_model->get_by_petugas($unit);
 
         if (!$data['pengaduan']) {
             $this->session->set_flashdata('error', 'Pengaduan tidak ditemukan atau bukan untuk unit Anda.');
