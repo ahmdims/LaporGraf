@@ -1,5 +1,21 @@
 <h1 class="h3 mb-4 text-gray-800">Detail Pengaduan</h1>
 
+<?php if ($this->session->flashdata('success')): ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <?= $this->session->flashdata('success'); ?>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+    </div>
+<?php endif; ?>
+<?php if ($this->session->flashdata('error')): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <?= $this->session->flashdata('error'); ?>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+    </div>
+<?php endif; ?>
+
+
 <div class="row">
     <div class="col-lg-7">
         <div class="card shadow mb-4">
@@ -31,7 +47,16 @@
                     <?php foreach ($pengaduan->balasan as $b): ?>
                         <div class="card mb-3">
                             <div class="card-body">
-                                <p><?= nl2br(htmlspecialchars($b->isi_balasan)); ?></p>
+                                <?php
+                                $badge_class = 'badge-secondary';
+                                if (strpos(strtolower($b->status), 'selesai') !== false || strpos(strtolower($b->status), 'acc') !== false) {
+                                    $badge_class = 'badge-success';
+                                } elseif (strpos(strtolower($b->status), 'proses') !== false) {
+                                    $badge_class = 'badge-info';
+                                }
+                                ?>
+                                <span class="badge <?= $badge_class; ?> mb-2"><?= htmlspecialchars($b->status); ?></span>
+                                <p class="card-text"><?= nl2br(htmlspecialchars($b->isi_balasan)); ?></p>
                             </div>
                             <div class="card-footer text-muted d-flex justify-content-between align-items-center">
                                 <small>Ditanggapi pada: <?= date('d M Y', strtotime($b->date)); ?></small>
@@ -56,8 +81,20 @@
                     <h5>Beri Tanggapan Baru</h5>
                     <?= form_open('manajemen/pengaduan/beri_tanggapan/' . $pengaduan->id_pengaduan); ?>
                     <input type="hidden" name="id_kategori" value="<?= $pengaduan->id_kategori; ?>">
+
                     <div class="form-group">
-                        <textarea name="isi_balasan" class="form-control" rows="5"
+                        <label for="status">Status Tanggapan</label>
+                        <select name="status" id="status" class="form-control" required>
+                            <option value="">-- Pilih Status --</option>
+                            <?php foreach ($status_list as $status): ?>
+                                <option value="<?= $status->status; ?>"><?= $status->status; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="isi_balasan">Isi Tanggapan</label>
+                        <textarea name="isi_balasan" id="isi_balasan" class="form-control" rows="5"
                             placeholder="Tuliskan tanggapan Anda di sini..." required></textarea>
                     </div>
                     <button type="submit" class="btn btn-success">Kirim Tanggapan</button>
