@@ -26,11 +26,25 @@ class Auth_model extends CI_Model
             // User found in 'siswa' table, verify password
             if (password_verify($password, $siswa->password)) {
                 // IMPORTANT: The 'role' is explicitly set to 'Siswa'
+                $siswa->role = 'Siswa';
                 return $siswa;
             }
         }
 
         // If user not found in either table or password mismatch
         return false;
+    }
+
+    public function register($data)
+    {
+        $role = $data['role'];
+        unset($data['role']);
+
+        if ($role === 'Siswa') {
+            return $this->db->insert('siswa', $data);
+        } else {
+            $data['role'] = $role;
+            return $this->db->insert('guru', $data);
+        }
     }
 }
