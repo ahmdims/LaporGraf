@@ -12,13 +12,12 @@ class Pengaduan extends CI_Controller
         }
         $this->load->model('Manajemen_model');
         $this->load->model('Tanggapan_model');
-        $this->load->model('Pengaduan_model'); // Untuk update status
+        $this->load->model('Pengaduan_model');
     }
 
     public function index()
     {
         $data['title'] = 'Daftar Pengaduan Masuk';
-        // Ambil 'keterangan' dari data session manajemen yang login
         $unit = $this->session->userdata('keterangan');
         $data['pengaduan_list'] = $this->Manajemen_model->get_pengaduan_by_unit($unit);
 
@@ -50,23 +49,85 @@ class Pengaduan extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->detail($id_pengaduan);
         } else {
-            // Data untuk tabel 'balasan'
             $data_balasan = [
                 'id_pengaduan' => $id_pengaduan,
                 'id_kategori' => $this->input->post('id_kategori'),
                 'date' => date('Y-m-d'),
-                'status' => 'Sedang Memproses', // atau status lain
+                'status' => 'Selesai',
                 'isi_balasan' => $this->input->post('isi_balasan'),
-                'konfirmasi' => '1' // Menandakan sudah dibalas
+                'konfirmasi' => '1'
             ];
-
             $this->Tanggapan_model->insert($data_balasan);
-
-            // Update status konfirmasi di tabel 'pengaduan'
             $this->Pengaduan_model->update($id_pengaduan, ['konfirmasi' => '1']);
 
             $this->session->set_flashdata('success', 'Tanggapan berhasil dikirim!');
             redirect('manajemen/pengaduan/detail/' . $id_pengaduan);
         }
+    }
+
+    // FUNGSI BARU UNTUK EDIT TANGGAPAN
+    public function edit_tanggapan($id_balasan)
+    {
+        $unit = $this->session->userdata('keterangan');
+        $tanggapan = $this->Tanggapan_model->get_tanggapan_for_unit($id_balasan, $unit);
+
+        if (!$tanggapan) {
+            $this->session->set_flashdata('error', 'Tanggapan tidak ditemukan.');
+            redirect('manajemen/pengaduan');
+        }
+
+        $data['title'] = 'Edit Tanggapan';
+        $data['tanggapan'] = $tanggapan;
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('manajemen/pengaduan/edit_tanggapan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    // FUNGSI BARU UNTUK UPDATE TANGGAPAN
+    public function update_tanggapan($id_balasan)
+    {
+        $unit = $this->session->userdata('keterangan');
+        $tanggapan = $this->Tanggapan_model->get_tanggapan_for_unit($id_balasan, $unit);
+        $id_pengaduan = $tanggapan->id_pengaduan;
+
+        if (!$tanggapan) {
+            $this->session->set_flashdata('error', 'Tanggapan tidak ditemukan.');
+            redirect('manajemen/pengaduan');
+        }
+
+        $this->form_validation->set_rules('isi_balasan', 'Isi Tanggapan', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->edit_tanggapan($id_balasan);
+        } else {
+            $data = ['isi_balasan' => $this->input->post('isi_balasan')];
+            $this->Tanggapan_model->update($id_balasan, $data);
+            $this->session->set_flashdata('success', 'Tanggapan berhasil diperbarui!');
+            redirect('manajemen/pengaduan/detail/' . $id_pengaduan);
+        }
+    }
+
+    // FUNGSI BARU UNTUK HAPUS TANGGAPAN
+    public function hapus_tanggapan($id_balasan)
+    {
+        $unit = $this->session->userdata('keterangan');
+        $tanggapan = $this->Tanggapan_model->get_tanggapan_for_unit($id_balasan, $unit);
+        $id_pengaduan = $tanggapan->id_pengaduan;
+
+        if (!$tanggapan) {
+            $this->session->set_flashdata('error', 'Tanggapan tidak ditemukan.');
+        } else {
+            $this->Tanggapan_model->delete($id_balasan);
+
+            // Cek apakah masih ada balasan lain untuk pengaduan ini
+            $sisa_balasan = $this->db->get_where('balasan', ['id_pengaduan' => $id_pengaduan])->num_rows();
+            if ($sisa_balasan == 0) {
+                // Jika sudah tidak ada balasan, kembalikan status pengaduan menjadi '0'
+                $this->Pengaduan_model->update($id_pengaduan, ['konfirmasi' => '0']);
+            }
+
+            $this->session->set_flashdata('success', 'Tanggapan berhasil dihapus.');
+        }
+        redirect('manajemen/pengaduan/detail/' . $id_pengaduan);
     }
 }

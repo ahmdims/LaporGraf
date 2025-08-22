@@ -25,13 +25,31 @@
                 <h6 class="m-0 font-weight-bold text-primary">Tanggapan</h6>
             </div>
             <div class="card-body">
-                <?php foreach ($pengaduan->balasan as $b): ?>
-                    <div class="alert alert-info">
-                        <small class="float-right"><?= date('d M Y', strtotime($b->date)); ?></small>
-                        <strong>Tanggapan:</strong><br>
-                        <?= nl2br(htmlspecialchars($b->isi_balasan)); ?>
-                    </div>
-                <?php endforeach; ?>
+                <?php if (empty($pengaduan->balasan)): ?>
+                    <p class="text-center">Belum ada tanggapan.</p>
+                <?php else: ?>
+                    <?php foreach ($pengaduan->balasan as $b): ?>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <p><?= nl2br(htmlspecialchars($b->isi_balasan)); ?></p>
+                            </div>
+                            <div class="card-footer text-muted d-flex justify-content-between align-items-center">
+                                <small>Ditanggapi pada: <?= date('d M Y', strtotime($b->date)); ?></small>
+                                <div>
+                                    <a href="<?= site_url('manajemen/pengaduan/edit_tanggapan/' . $b->id_balasan); ?>"
+                                        class="btn btn-sm btn-info" title="Edit Tanggapan">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="<?= site_url('manajemen/pengaduan/hapus_tanggapan/' . $b->id_balasan); ?>"
+                                        class="btn btn-sm btn-danger" title="Hapus Tanggapan"
+                                        onclick="return confirm('Yakin ingin menghapus tanggapan ini?');">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
 
                 <?php if ($pengaduan->konfirmasi == '0'): ?>
                     <hr>
