@@ -13,7 +13,6 @@ class Auth_model extends CI_Model
         if ($guru) {
             // User found in 'guru' table, verify password
             if (password_verify($password, $guru->password)) {
-                // IMPORTANT: The 'role' is directly from the database
                 return $guru;
             }
         }
@@ -25,26 +24,19 @@ class Auth_model extends CI_Model
         if ($siswa) {
             // User found in 'siswa' table, verify password
             if (password_verify($password, $siswa->password)) {
-                // IMPORTANT: The 'role' is explicitly set to 'Siswa'
-                $siswa->role = 'Siswa';
                 return $siswa;
             }
         }
 
-        // If user not found in either table or password mismatch
         return false;
     }
 
-    public function register($data)
+    /**
+     * FUNGSI BARU UNTUK MENYIMPAN DATA SISWA BARU
+     */
+    public function register_siswa($data)
     {
-        $role = $data['role'];
-        unset($data['role']);
-
-        if ($role === 'Siswa') {
-            return $this->db->insert('siswa', $data);
-        } else {
-            $data['role'] = $role;
-            return $this->db->insert('guru', $data);
-        }
+        // Fungsi ini akan memasukkan data array ke dalam tabel 'siswa'
+        return $this->db->insert('siswa', $data);
     }
 }
