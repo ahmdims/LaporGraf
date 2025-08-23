@@ -7,17 +7,18 @@ class Siswa extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        if ($this->session->userdata('role') != 'admin')
+        if ($this->session->userdata('role') != 'admin') {
             redirect('auth');
+        }
         $this->load->model('User_model');
     }
 
     public function index()
     {
+        $data['title'] = 'Kelola Siswa';
         $data['user_list'] = $this->User_model->get_users_by_role('siswa');
 
-        $this->load->view('templates/header');
-        $this->load->view('templates/nav_admin');
+        $this->load->view('templates/header', $data);
         $this->load->view('admin/siswa/index', $data);
         $this->load->view('templates/footer');
     }
