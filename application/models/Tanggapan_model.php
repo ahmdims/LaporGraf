@@ -14,25 +14,24 @@ class Tanggapan_model extends CI_Model
         return $this->db->insert('balasan', $data);
     }
 
-    public function update($id_balasan, $data)
+    public function update($id, $data)
     {
-        $this->db->where('id_balasan', $id_balasan);
+        $this->db->where('id_balasan', $id);
         return $this->db->update('balasan', $data);
     }
 
-    public function delete($id_balasan)
+    public function delete($id)
     {
-        $this->db->where('id_balasan', $id_balasan);
-        $this->db->delete('balasan');
+        $this->db->where('id_balasan', $id);
+        return $this->db->delete('balasan');
     }
 
     public function get_tanggapan_for_unit($id_balasan, $unit)
     {
-        $this->db->select('b.*, k.petugas');
-        $this->db->from('balasan b');
-        $this->db->join('kategori k', 'b.id_kategori = k.id_kategori');
+        $this->db->select('b.*, s.status');
+        $this->db->from('balasan as b');
+        $this->db->join('status as s', 'b.id_status = s.id_status');
         $this->db->where('b.id_balasan', $id_balasan);
-        $this->db->where('k.petugas', $unit);
         return $this->db->get()->row();
     }
 
@@ -42,6 +41,14 @@ class Tanggapan_model extends CI_Model
         $this->db->from('balasan as b');
         $this->db->join('status as s', 'b.id_status = s.id_status');
         $this->db->where('b.id_pengaduan', $id_pengaduan);
-        return $this->db->get()->result();
+        $balasan_list = $this->db->get()->result();
+
+        foreach ($balasan_list as $balasan) {
+            $this->db->where('id_balasan', $balasan->id_balasan);
+            $kepuasan = $this->db->get('kepuasan')->row();
+            $balasan->sudah_diberi_kepuasan = ($kepuasan != null);
+        }
+
+        return $balasan_list;
     }
 }

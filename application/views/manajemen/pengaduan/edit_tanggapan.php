@@ -7,11 +7,11 @@
 
         <div class="form-group">
             <label for="status">Status Tanggapan</label>
-            <select name="status" id="status" class="form-control" required>
+            <select name="id_status" class="form-control" required>
                 <option value="">-- Pilih Status --</option>
-                <?php foreach ($status_list as $status_item): ?>
-                    <option value="<?= $status_item->status; ?>" <?= ($status_item->status == $tanggapan->status) ? 'selected' : ''; ?>>
-                        <?= $status_item->status; ?>
+                <?php foreach ($status_list as $status): ?>
+                    <option value="<?= $status->id_status; ?>" <?= ($status->id_status == $tanggapan->id_status) ? 'selected' : ''; ?>>
+                        <?= htmlspecialchars($status->status); ?>
                     </option>
                 <?php endforeach; ?>
             </select>

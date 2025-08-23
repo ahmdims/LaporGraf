@@ -83,6 +83,12 @@ class Pengaduan extends CI_Controller
             redirect('manajemen/pengaduan');
         }
 
+        if ($tanggapan->konfirmasi == '1') {
+            $this->session->set_flashdata('error', 'Tanggapan tidak dapat diubah karena pelapor sudah memberikan penilaian.');
+            redirect('manajemen/pengaduan/detail/' . $tanggapan->id_pengaduan);
+            return;
+        }
+
         $data['title'] = 'Edit Tanggapan';
         $data['tanggapan'] = $tanggapan;
         $data['status_list'] = $this->Status_model->get_by_petugas($unit);
@@ -104,14 +110,14 @@ class Pengaduan extends CI_Controller
         }
 
         $this->form_validation->set_rules('isi_balasan', 'Isi Tanggapan', 'required');
-        $this->form_validation->set_rules('status', 'Status', 'required');
+        $this->form_validation->set_rules('id_status', 'Status', 'required');
 
         if ($this->form_validation->run() == FALSE) {
             $this->edit_tanggapan($id_balasan);
         } else {
             $data = [
                 'isi_balasan' => $this->input->post('isi_balasan'),
-                'status' => $this->input->post('status')
+                'id_status' => $this->input->post('id_status')
             ];
             $this->Tanggapan_model->update($id_balasan, $data);
             $this->session->set_flashdata('success', 'Tanggapan berhasil diperbarui!');
@@ -128,14 +134,18 @@ class Pengaduan extends CI_Controller
         if (!$tanggapan) {
             $this->session->set_flashdata('error', 'Tanggapan tidak ditemukan.');
         } else {
-            $this->Tanggapan_model->delete($id_balasan);
+            if ($tanggapan->konfirmasi == '1') {
+                $this->session->set_flashdata('error', 'Tanggapan tidak dapat dihapus karena pelapor sudah memberikan penilaian.');
+            } else {
+                $this->Tanggapan_model->delete($id_balasan);
 
-            $sisa_balasan = $this->db->get_where('balasan', ['id_pengaduan' => $id_pengaduan])->num_rows();
-            if ($sisa_balasan == 0) {
-                $this->Pengaduan_model->update($id_pengaduan, ['konfirmasi' => '0']);
+                $sisa_balasan = $this->db->get_where('balasan', ['id_pengaduan' => $id_pengaduan])->num_rows();
+                if ($sisa_balasan == 0) {
+                    $this->Pengaduan_model->update($id_pengaduan, ['konfirmasi' => '0']);
+                }
+
+                $this->session->set_flashdata('success', 'Tanggapan berhasil dihapus.');
             }
-
-            $this->session->set_flashdata('success', 'Tanggapan berhasil dihapus.');
         }
         redirect('manajemen/pengaduan/detail/' . $id_pengaduan);
     }

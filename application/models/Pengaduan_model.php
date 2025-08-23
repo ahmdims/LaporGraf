@@ -16,7 +16,13 @@ class Pengaduan_model extends CI_Model
 
     public function get_by_id($id)
     {
-        return $this->db->get_where('pengaduan', ['id_pengaduan' => $id])->row();
+        $this->db->select('p.*, k.nama_kategori, COALESCE(s.nama, g.nama) as nama_pelapor');
+        $this->db->from('pengaduan as p');
+        $this->db->join('kategori as k', 'p.id_kategori = k.id_kategori', 'left');
+        $this->db->join('siswa as s', 'p.user_id = s.user_id', 'left');
+        $this->db->join('guru as g', 'p.user_id = g.user_id', 'left');
+        $this->db->where('p.id_pengaduan', $id);
+        return $this->db->get()->row();
     }
 
     public function insert($data)
