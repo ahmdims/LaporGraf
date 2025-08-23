@@ -6,10 +6,12 @@ class Pengaduan_model extends CI_Model
 
     public function get_by_user($userId)
     {
-        $this->db->select('p.*, k.nama_kategori');
+        $this->db->select('p.*, k.nama_kategori, COUNT(b.id_balasan) as jumlah_balasan');
         $this->db->from('pengaduan p');
-        $this->db->join('kategori k', 'p.id_kategori = k.id_kategori');
+        $this->db->join('kategori k', 'p.id_kategori = k.id_kategori', 'left');
+        $this->db->join('balasan b', 'p.id_pengaduan = b.id_pengaduan', 'left');
         $this->db->where('p.user_id', $userId);
+        $this->db->group_by('p.id_pengaduan');
         $this->db->order_by('p.date', 'DESC');
         return $this->db->get()->result();
     }
@@ -44,10 +46,14 @@ class Pengaduan_model extends CI_Model
 
     public function get_valid_pengaduan_for_edit_delete($id, $userId)
     {
-        $this->db->where('id_pengaduan', $id);
-        $this->db->where('user_id', $userId);
-        $this->db->where('konfirmasi', '0');
-        return $this->db->get('pengaduan')->row();
+        $this->db->select('p.*, k.nama_kategori');
+        $this->db->from('pengaduan p');
+        $this->db->join('kategori k', 'p.id_kategori = k.id_kategori', 'left');
+        $this->db->join('balasan b', 'p.id_pengaduan = b.id_pengaduan', 'left');
+        $this->db->where('p.id_pengaduan', $id);
+        $this->db->where('p.user_id', $userId);
+        $this->db->where('b.id_balasan IS NULL');
+        return $this->db->get()->row();
     }
 
     public function get_pengaduan_detail_for_user($id_pengaduan, $user_id)

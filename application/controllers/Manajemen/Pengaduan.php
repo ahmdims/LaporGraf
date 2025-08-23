@@ -66,8 +66,6 @@ class Pengaduan extends CI_Controller
 
             $this->Tanggapan_model->insert($data);
 
-            $this->Pengaduan_model->update($id_pengaduan, ['konfirmasi' => '1']);
-
             $this->session->set_flashdata('success', 'Tanggapan berhasil dikirim!');
             redirect('manajemen/pengaduan/detail/' . $id_pengaduan);
         }
@@ -81,12 +79,6 @@ class Pengaduan extends CI_Controller
         if (!$tanggapan) {
             $this->session->set_flashdata('error', 'Tanggapan tidak ditemukan.');
             redirect('manajemen/pengaduan');
-        }
-
-        if ($tanggapan->konfirmasi == '1') {
-            $this->session->set_flashdata('error', 'Tanggapan tidak dapat diubah karena pelapor sudah memberikan penilaian.');
-            redirect('manajemen/pengaduan/detail/' . $tanggapan->id_pengaduan);
-            return;
         }
 
         $data['title'] = 'Edit Tanggapan';
@@ -134,18 +126,8 @@ class Pengaduan extends CI_Controller
         if (!$tanggapan) {
             $this->session->set_flashdata('error', 'Tanggapan tidak ditemukan.');
         } else {
-            if ($tanggapan->konfirmasi == '1') {
-                $this->session->set_flashdata('error', 'Tanggapan tidak dapat dihapus karena pelapor sudah memberikan penilaian.');
-            } else {
-                $this->Tanggapan_model->delete($id_balasan);
-
-                $sisa_balasan = $this->db->get_where('balasan', ['id_pengaduan' => $id_pengaduan])->num_rows();
-                if ($sisa_balasan == 0) {
-                    $this->Pengaduan_model->update($id_pengaduan, ['konfirmasi' => '0']);
-                }
-
-                $this->session->set_flashdata('success', 'Tanggapan berhasil dihapus.');
-            }
+            $this->Tanggapan_model->delete($id_balasan);
+            $this->session->set_flashdata('success', 'Tanggapan berhasil dihapus.');
         }
         redirect('manajemen/pengaduan/detail/' . $id_pengaduan);
     }

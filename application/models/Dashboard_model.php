@@ -19,12 +19,9 @@ class Dashboard_model extends CI_Model
         return $this->db->count_all('guru');
     }
 
-    public function count_pengaduan_by_user($userId, $status = null)
+    public function count_pengaduan_by_user($userId)
     {
         $this->db->where('user_id', $userId);
-        if ($status !== null) {
-            $this->db->where('konfirmasi', $status);
-        }
         return $this->db->count_all_results('pengaduan');
     }
 }

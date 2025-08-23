@@ -102,8 +102,6 @@ class Pengaduan extends CI_Controller
 
                 $this->Kepuasan_model->insert($data);
 
-                $this->Tanggapan_model->update($id_balasan, ['konfirmasi' => '1']);
-
                 $this->session->set_flashdata('success', 'Terima kasih atas feedback Anda!');
             }
             redirect('siswa/pengaduan/detail/' . $id_pengaduan);
