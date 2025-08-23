@@ -11,8 +11,9 @@ class Pengaduan extends CI_Controller
             redirect('auth');
         }
         $this->load->model('Pengaduan_model');
-        $this->load->model('Kategori_model');
+        $this->load->model('Tanggapan_model');
         $this->load->model('Kepuasan_model');
+        $this->load->model('Kategori_model');
     }
 
     public function index()
@@ -99,10 +100,35 @@ class Pengaduan extends CI_Controller
                     'komentar' => $this->input->post('komentar'),
                     'rating' => $this->input->post('rating')
                 ];
+
                 $this->Kepuasan_model->insert($data);
+
+                $this->Tanggapan_model->update($id_balasan, ['konfirmasi' => '1']);
+
                 $this->session->set_flashdata('success', 'Terima kasih atas feedback Anda!');
             }
             redirect('guru/pengaduan/detail/' . $id_pengaduan);
+        }
+    }
+
+    public function hapus_kepuasan($id_kepuasan)
+    {
+        $kepuasan = $this->Kepuasan_model->get_by_id($id_kepuasan);
+
+        if ($kepuasan) {
+            $id_balasan = $kepuasan->id_balasan;
+            $balasan = $this->Tanggapan_model->get_by_id($id_balasan);
+            $id_pengaduan = $balasan->id_pengaduan;
+
+            $this->Kepuasan_model->delete($id_kepuasan);
+
+            $this->Tanggapan_model->update($id_balasan, ['konfirmasi' => '0']);
+
+            $this->session->set_flashdata('success', 'Penilaian kepuasan berhasil dihapus.');
+            redirect('guru/pengaduan/detail/' . $id_pengaduan);
+        } else {
+            $this->session->set_flashdata('error', 'Data kepuasan tidak ditemukan.');
+            redirect('guru/pengaduan');
         }
     }
 

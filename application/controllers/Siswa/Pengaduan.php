@@ -11,8 +11,9 @@ class Pengaduan extends CI_Controller
             redirect('auth');
         }
         $this->load->model('Pengaduan_model');
-        $this->load->model('Kategori_model');
+        $this->load->model('Tanggapan_model');
         $this->load->model('Kepuasan_model');
+        $this->load->model('Kategori_model');
     }
 
     public function index()
@@ -53,7 +54,6 @@ class Pengaduan extends CI_Controller
                 'deskripsi' => $this->input->post('deskripsi'),
                 'date' => date('Y-m-d'),
                 'tempat' => $this->input->post('tempat'),
-                'konfirmasi' => '0'
             ];
 
             $this->Pengaduan_model->insert($data);
@@ -99,7 +99,11 @@ class Pengaduan extends CI_Controller
                     'komentar' => $this->input->post('komentar'),
                     'rating' => $this->input->post('rating')
                 ];
+
                 $this->Kepuasan_model->insert($data);
+
+                $this->Tanggapan_model->update($id_balasan, ['konfirmasi' => '1']);
+
                 $this->session->set_flashdata('success', 'Terima kasih atas feedback Anda!');
             }
             redirect('siswa/pengaduan/detail/' . $id_pengaduan);
