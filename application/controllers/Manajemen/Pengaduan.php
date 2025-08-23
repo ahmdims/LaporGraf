@@ -29,14 +29,16 @@ class Pengaduan extends CI_Controller
 
     public function detail($id_pengaduan)
     {
-        $data['title'] = 'Detail dan Tanggapan Pengaduan';
-        $unit = $this->session->userdata('keterangan');
-        $data['pengaduan'] = $this->Manajemen_model->get_pengaduan_detail($id_pengaduan, $unit);
+        $data['title'] = 'Detail Pengaduan';
 
-        $data['status_list'] = $this->Status_model->get_by_petugas($unit);
+        $data['pengaduan'] = $this->Pengaduan_model->get_by_id($id_pengaduan);
+
+        $data['balasan_list'] = $this->Tanggapan_model->get_tanggapan_by_pengaduan($id_pengaduan);
+
+        $data['status_list'] = $this->Status_model->get_all();
 
         if (!$data['pengaduan']) {
-            $this->session->set_flashdata('error', 'Pengaduan tidak ditemukan atau bukan untuk unit Anda.');
+            $this->session->set_flashdata('error', 'Pengaduan tidak ditemukan.');
             redirect('manajemen/pengaduan');
         }
 
@@ -48,7 +50,7 @@ class Pengaduan extends CI_Controller
     public function beri_tanggapan($id_pengaduan)
     {
         $this->form_validation->set_rules('isi_balasan', 'Isi Balasan', 'required');
-        $this->form_validation->set_rules('id_status', 'Status', 'required');
+        $this->form_validation->set_rules('id_status', 'Status', 'required|numeric');
 
         if ($this->form_validation->run() == FALSE) {
             $this->detail($id_pengaduan);
@@ -56,14 +58,15 @@ class Pengaduan extends CI_Controller
             $data = [
                 'id_pengaduan' => $id_pengaduan,
                 'id_kategori' => $this->input->post('id_kategori'),
-                'id_status' => $this->input->post('id_status'),
                 'date' => date('Y-m-d'),
+                'id_status' => $this->input->post('id_status'),
                 'isi_balasan' => $this->input->post('isi_balasan'),
-                'konfirmasi' => '1',
+                'konfirmasi' => '1'
             ];
 
+            $this->Tanggapan_model->insert($data);
+
             $this->Pengaduan_model->update($id_pengaduan, ['konfirmasi' => '1']);
-            $this->Tanggapan_model->insert_tanggapan($data);
 
             $this->session->set_flashdata('success', 'Tanggapan berhasil dikirim!');
             redirect('manajemen/pengaduan/detail/' . $id_pengaduan);

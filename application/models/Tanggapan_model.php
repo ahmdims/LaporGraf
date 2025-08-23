@@ -36,8 +36,12 @@ class Tanggapan_model extends CI_Model
         return $this->db->get()->row();
     }
 
-    public function insert_tanggapan($data)
+    public function get_tanggapan_by_pengaduan($id_pengaduan)
     {
-        return $this->db->insert('balasan', $data);
+        $this->db->select('b.*, s.status');
+        $this->db->from('balasan as b');
+        $this->db->join('status as s', 'b.id_status = s.id_status');
+        $this->db->where('b.id_pengaduan', $id_pengaduan);
+        return $this->db->get()->result();
     }
 }

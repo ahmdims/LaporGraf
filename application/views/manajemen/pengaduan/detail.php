@@ -41,64 +41,49 @@
                 <h6 class="m-0 font-weight-bold text-primary">Tanggapan</h6>
             </div>
             <div class="card-body">
-                <?php if (empty($pengaduan->balasan)): ?>
-                    <p class="text-center">Belum ada tanggapan.</p>
+                <?php if (empty($balasan_list)): ?>
+                    <p class="text-center">Belum ada tanggapan untuk pengaduan ini.</p>
                 <?php else: ?>
-                    <?php foreach ($pengaduan->balasan as $b): ?>
+                    <?php foreach ($balasan_list as $balas): ?>
                         <div class="card mb-3">
                             <div class="card-body">
-                                <?php
-                                $badge_class = 'badge-secondary';
-                                if (strpos(strtolower($b->status), 'selesai') !== false || strpos(strtolower($b->status), 'acc') !== false) {
-                                    $badge_class = 'badge-success';
-                                } elseif (strpos(strtolower($b->status), 'proses') !== false) {
-                                    $badge_class = 'badge-info';
-                                }
-                                ?>
-                                <span class="badge <?= $badge_class; ?> mb-2"><?= htmlspecialchars($b->status); ?></span>
-                                <p class="card-text"><?= nl2br(htmlspecialchars($b->isi_balasan)); ?></p>
-                            </div>
-                            <div class="card-footer text-muted d-flex justify-content-between align-items-center">
-                                <small>Ditanggapi pada: <?= date('d M Y', strtotime($b->date)); ?></small>
-                                <div>
-                                    <a href="<?= site_url('manajemen/pengaduan/edit_tanggapan/' . $b->id_balasan); ?>"
-                                        class="btn btn-sm btn-info" title="Edit Tanggapan">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <a href="<?= site_url('manajemen/pengaduan/hapus_tanggapan/' . $b->id_balasan); ?>"
-                                        class="btn btn-sm btn-danger" title="Hapus Tanggapan"
-                                        onclick="return confirm('Yakin ingin menghapus tanggapan ini?');">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                </div>
+                                <span class="badge badge-info mb-2"><?= htmlspecialchars($balas->status); ?></span>
+                                <p class="card-text"><?= nl2br(htmlspecialchars($balas->isi_balasan)); ?></p>
                             </div>
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
 
                 <?php if ($pengaduan->konfirmasi == '0'): ?>
-                    <hr>
-                    <h5>Beri Tanggapan Baru</h5>
-                    <?= form_open('manajemen/pengaduan/beri_tanggapan/' . $pengaduan->id_pengaduan); ?>
-                    <input type="hidden" name="id_kategori" value="<?= $pengaduan->id_kategori; ?>">
-
-                    <div class="form-group">
-                        <label for="status">Status Tanggapan</label>
-                        <select name="status" id="status" class="form-control" required>
-                            <option value="">-- Pilih Status --</option>
-                            <?php foreach ($status_list as $status): ?>
-                                <option value="<?= $status->status; ?>"><?= $status->status; ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Beri Tanggapan</h6>
+                        </div>
+                        <div class="card-body">
+                            <?php if ($pengaduan->konfirmasi == '1' && !empty($pengaduan->balasan)): ?>
+                                <p class="text-success">Anda sudah memberikan tanggapan untuk pengaduan ini.</p>
+                            <?php else: ?>
+                                <?= form_open('manajemen/pengaduan/beri_tanggapan/' . $pengaduan->id_pengaduan); ?>
+                                <input type="hidden" name="id_kategori" value="<?= $pengaduan->id_kategori; ?>">
+                                <div class="form-group">
+                                    <label>Isi Tanggapan</label>
+                                    <textarea name="isi_balasan" class="form-control" rows="4" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ubah Status</label>
+                                    <select name="id_status" class="form-control" required>
+                                        <option value="">-- Pilih Status --</option>
+                                        <?php foreach ($status_list as $status): ?>
+                                            <option value="<?= $status->id_status; ?>"><?= htmlspecialchars($status->status); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Kirim Tanggapan</button>
+                                <?= form_close(); ?>
+                            <?php endif; ?>
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="isi_balasan">Isi Tanggapan</label>
-                        <textarea name="isi_balasan" id="isi_balasan" class="form-control" rows="5"
-                            placeholder="Tuliskan tanggapan Anda di sini..." required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-success">Kirim Tanggapan</button>
-                    <?= form_close(); ?>
                 <?php endif; ?>
             </div>
         </div>
