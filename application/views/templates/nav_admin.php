@@ -3,8 +3,8 @@
     data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_toggle">
     <div class="d-flex flex-stack px-4 px-lg-6 py-3 py-lg-8" id="kt_app_sidebar_logo">
         <a href="<?= site_url('admin/dashboard'); ?>">
-            <img alt="Logo" src="assets/media/logos/demo23.svg" class="h-20px h-lg-25px theme-light-show" />
-            <img alt="Logo" src="assets/media/logos/demo23-dark.svg" class="h-20px h-lg-25px theme-dark-show" />
+            <img alt="Logo" src="<?= base_url('asset/media/logos/default.svg'); ?>" class="h-20px h-lg-30px theme-light-show" />
+            <img alt="Logo" src="<?= base_url('asset/media/logos/default-dark.svg'); ?>" class="h-20px h-lg-30px theme-dark-show" />
         </a>
     </div>
     <div class="flex-column-fluid px-4 px-lg-8 py-4" id="kt_app_sidebar_nav">
@@ -14,7 +14,7 @@
             data-kt-scroll-wrappers="#kt_app_sidebar, #kt_app_sidebar_nav" data-kt-scroll-offset="5px">
 
             <div class="mb-6">
-                <h3 class="text-gray-800 fw-bold mb-8">Services</h3>
+                <h3 class="text-gray-800 fw-bold mb-8">Menu Utama</h3>
                 <div class="row row-cols-3" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button]">
                     <div class="col mb-4">
                         <a href="<?= site_url('admin/dashboard'); ?>"

@@ -4,7 +4,7 @@
 <head>
     <title><?= $title; ?> - LaporGraf</title>
     <meta charset="utf-8" />
-    <link rel="shortcut icon" href="<?= base_url('asset/media/logos/favicon.ico'); ?>" />
+    <link rel="shortcut icon" href="<?= base_url('asset/media/logos/favicon.svg'); ?>" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <link href="<?= base_url('asset/plugins/custom/datatables/datatables.bundle.css'); ?>" rel="stylesheet"
         type="text/css" />
@@ -41,7 +41,7 @@
                                         class="header-search d-flex align-items-center w-lg-350px">
                                         <span class="badge py-3 px-4 fs-7 badge-light-primary">
                                             <i class="ki-outline ki-profile-circle text-primary me-2 fs-3"></i>
-                                            Admin
+                                            <?= ucwords($this->session->userdata('role')); ?>
                                         </span>
                                     </div>
                                 </div>
@@ -54,9 +54,10 @@
                                 id="kt_app_sidebar_toggle">
                                 <i class="ki-outline ki-abstract-14 fs-2"></i>
                             </div>
-                            <a href="../../demo23/dist/index.html" class="d-flex d-lg-none">
-                                <img alt="Logo" src="assets/media/logos/demo23.svg" class="h-20px theme-light-show" />
-                                <img alt="Logo" src="assets/media/logos/demo23-dark.svg"
+                            <a href="#" class="d-flex d-lg-none">
+                                <img alt="Logo" src="<?= base_url('asset/media/logos/default.svg'); ?>"
+                                    class="h-20px theme-light-show" />
+                                <img alt="Logo" src="<?= base_url('asset/media/logos/default-dark.svg'); ?>"
                                     class="h-20px theme-dark-show" />
                             </a>
                         </div>
@@ -66,7 +67,8 @@
                                     <div class="cursor-pointer position-relative symbol symbol-circle symbol-40px"
                                         data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
                                         data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-                                        <img src="https://ui-avatars.com/api/?name=<?= urlencode($this->session->userdata('nama')); ?>&background=4e73df&color=fff" alt="user" />
+                                        <img src="https://ui-avatars.com/api/?name=<?= $this->session->userdata('nama'); ?>&background=4e73df&color=fff"
+                                            alt="user" />
                                     </div>
                                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
                                         data-kt-menu="true">
@@ -74,16 +76,18 @@
                                             <div class="menu-content d-flex align-items-center px-3">
                                                 <div class="symbol symbol-50px me-5">
                                                     <img alt="Logo"
-                                                        src="https://ui-avatars.com/api/?name=<?= urlencode($this->session->userdata('nama')); ?>&background=4e73df&color=fff" />
+                                                        src="https://ui-avatars.com/api/?name=<?= $this->session->userdata('nama'); ?>&background=4e73df&color=fff" />
                                                 </div>
                                                 <div class="d-flex flex-column">
                                                     <div class="fw-bold d-flex align-items-center fs-5">
-                                                        <?= htmlspecialchars($user); ?>
+                                                        <?= $this->session->userdata('nama'); ?>
                                                         <span
-                                                            class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span>
+                                                            class="badge badge-light-primary fw-bold fs-8 px-2 py-1 ms-2">
+                                                            <?= ucwords($this->session->userdata('role')); ?>
+                                                        </span>
                                                     </div>
                                                     <span class="fw-semibold text-muted text-hover-primary fs-7">
-                                                        22709282727
+                                                        <?= $this->session->userdata('user_id'); ?>
                                                     </span>
                                                 </div>
                                             </div>
@@ -114,7 +118,7 @@
                                                         <span class="menu-icon" data-kt-element="icon">
                                                             <i class="ki-outline ki-night-day fs-2"></i>
                                                         </span>
-                                                        <span class="menu-title">Light</span>
+                                                        <span class="menu-title">Terang</span>
                                                     </a>
                                                 </div>
                                                 <div class="menu-item px-3 my-0">
@@ -123,7 +127,7 @@
                                                         <span class="menu-icon" data-kt-element="icon">
                                                             <i class="ki-outline ki-moon fs-2"></i>
                                                         </span>
-                                                        <span class="menu-title">Dark</span>
+                                                        <span class="menu-title">Gelap</span>
                                                     </a>
                                                 </div>
                                                 <div class="menu-item px-3 my-0">
@@ -132,7 +136,7 @@
                                                         <span class="menu-icon" data-kt-element="icon">
                                                             <i class="ki-outline ki-screen fs-2"></i>
                                                         </span>
-                                                        <span class="menu-title">System</span>
+                                                        <span class="menu-title">Sistem</span>
                                                     </a>
                                                 </div>
                                             </div>

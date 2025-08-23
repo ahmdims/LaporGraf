@@ -4,7 +4,7 @@
 <head>
     <title>LaporGraf</title>
     <meta charset="utf-8" />
-    <link rel="shortcut icon" href="<?= base_url('asset/media/logos/favicon.ico'); ?>" />
+    <link rel="shortcut icon" href="<?= base_url('asset/media/logos/favicon.svg'); ?>" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <link href="<?= base_url('asset/plugins/custom/datatables/datatables.bundle.css'); ?>" rel="stylesheet"
         type="text/css" />
@@ -37,7 +37,7 @@
                         src="<?= base_url('asset/media/auth/agency.png'); ?>" alt="" />
                     <img class="theme-dark-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20"
                         src="<?= base_url('asset/media/auth/agency-dark.png'); ?>" alt="" />
-                    <h1 class="text-gray-800 fs-2qx fw-bold text-center mb-7">Fast, Efficient and Productive</h1>
+                    <h1 class="text-gray-800 fs-2qx fw-bold text-center mb-7">LaporGraf</h1>
                     <div class="text-gray-600 fs-base text-center fw-semibold">
                         Website untuk mengadukan, memberi saran, dan kritikan di kalangan warga Grafika.
                     </div>

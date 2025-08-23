@@ -17,6 +17,10 @@ class Kategori extends CI_Controller
     public function index()
     {
         $data['title'] = 'Kelola Kategori';
+        $data['user'] = [
+            'nama' => $this->session->userdata('nama'),
+            'role' => $this->session->userdata('role'),
+        ];
         $data['kategori_list'] = $this->Kategori_model->get_all();
 
         $this->load->view('templates/header', $data);
