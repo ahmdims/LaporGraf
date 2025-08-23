@@ -22,8 +22,8 @@ class Dashboard extends CI_Controller
         $data['total_siswa'] = $this->Dashboard_model->count_siswa();
         $data['total_guru'] = $this->Dashboard_model->count_guru();
 
-        $this->load->view('templates/header', $data);
+        // $this->load->view('templates/header', $data);
         $this->load->view('admin/dashboard_view', $data);
-        $this->load->view('templates/footer');
+        // $this->load->view('templates/footer');
     }
 }
