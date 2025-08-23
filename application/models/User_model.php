@@ -3,34 +3,43 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class User_model extends CI_Model
 {
+    private $table = 'users';
 
-    public function get_users($table, $role = null)
+    public function get_users_by_role($role)
     {
+        $this->db->where('role', $role);
+        return $this->db->get($this->table)->result();
+    }
+
+    public function get_user_by_id($user_id, $role = null)
+    {
+        // Pastikan nama tabel sudah benar, yaitu 'users'
+        $this->db->from($this->table);
+        $this->db->where('user_id', $user_id);
+
         if ($role) {
             $this->db->where('role', $role);
         }
-        return $this->db->get($table)->result();
+
+        $query = $this->db->get();
+        return $query->row(); // Menggunakan row() untuk mendapatkan satu baris data
     }
 
-    public function get_user_by_id($table, $user_id)
-    {
-        return $this->db->get_where($table, ['user_id' => $user_id])->row();
-    }
-
-    public function insert($table, $data)
-    {
-        return $this->db->insert($table, $data);
-    }
-
-    public function update($table, $user_id, $data)
+    public function delete_user($user_id)
     {
         $this->db->where('user_id', $user_id);
-        return $this->db->update($table, $data);
+        $this->db->delete($this->table);
     }
 
-    public function delete($table, $user_id)
+    // Tambahkan fungsi lain jika diperlukan, seperti untuk create dan update
+    public function create_user($data)
+    {
+        return $this->db->insert($this->table, $data);
+    }
+
+    public function update_user($user_id, $data)
     {
         $this->db->where('user_id', $user_id);
-        return $this->db->delete($table);
+        return $this->db->update($this->table, $data);
     }
 }

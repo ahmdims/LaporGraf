@@ -16,7 +16,7 @@ class Kategori extends CI_Controller
 
     public function index()
     {
-        $data['title'] = 'Setup Master Kategori';
+        $data['title'] = 'Kelola Kategori';
         $data['kategori_list'] = $this->Kategori_model->get_all();
 
         $this->load->view('templates/header', $data);
@@ -26,7 +26,7 @@ class Kategori extends CI_Controller
 
     public function create()
     {
-        $data['title'] = 'Tambah Kategori Baru';
+        $data['title'] = 'Tambah Kategori';
         $data['unit_list'] = $this->Admin_model->get_all_unit();
 
         $this->load->view('templates/header', $data);
@@ -54,7 +54,7 @@ class Kategori extends CI_Controller
 
     public function edit($id)
     {
-        $data['title'] = 'Edit Kategori';
+        $data['title'] = 'Ubah Kategori';
         $data['kategori'] = $this->Kategori_model->get_by_id($id);
         $data['unit_list'] = $this->Admin_model->get_all_unit();
 

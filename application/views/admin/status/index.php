@@ -66,7 +66,7 @@
                             <thead>
                                 <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                     <th class="min-w-100px">ID</th>
-                                    <th class="min-w-100px">Nama Status</th>
+                                    <th class="min-w-100px">Status</th>
                                     <th class="min-w-100px">Unit Terkait (Petugas)</th>
                                     <th class="min-w-100px">Unit</th>
                                 </tr>

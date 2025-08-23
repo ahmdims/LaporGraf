@@ -14,16 +14,17 @@ class Guru extends CI_Controller
 
     public function index()
     {
-        $data['title'] = 'Setup Akun Guru';
-        $data['user_list'] = $this->User_model->get_users('guru', 'Guru');
-        $this->load->view('templates/header', $data);
+        $data['user_list'] = $this->User_model->get_users_by_role('guru');
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/nav_admin');
         $this->load->view('admin/guru/index', $data);
         $this->load->view('templates/footer');
     }
 
     public function create()
     {
-        $data['title'] = 'Tambah Akun Guru';
+        $data['title'] = 'Tambah Guru';
         $this->load->view('templates/header', $data);
         $this->load->view('admin/guru/create', $data);
         $this->load->view('templates/footer');
@@ -54,9 +55,16 @@ class Guru extends CI_Controller
 
     public function edit($user_id)
     {
-        $data['title'] = 'Edit Akun Guru';
-        $data['user'] = $this->User_model->get_user_by_id('guru', $user_id);
-        $this->load->view('templates/header', $data);
+        // Mengambil data guru berdasarkan ID dan role
+        // Perhatikan penambahan 'guru' sebagai argumen kedua
+        $data['user'] = $this->User_model->get_user_by_id($user_id, 'guru');
+
+        if (empty($data['user'])) {
+            show_404();
+        }
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/nav_admin');
         $this->load->view('admin/guru/edit', $data);
         $this->load->view('templates/footer');
     }

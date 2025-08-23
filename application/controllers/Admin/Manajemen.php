@@ -15,16 +15,17 @@ class Manajemen extends CI_Controller
 
     public function index()
     {
-        $data['title'] = 'Setup Akun Manajemen';
-        $data['user_list'] = $this->User_model->get_users('guru', 'Manajemen');
-        $this->load->view('templates/header', $data);
+        $data['user_list'] = $this->User_model->get_users_by_role('manajemen');
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/nav_admin');
         $this->load->view('admin/manajemen/index', $data);
         $this->load->view('templates/footer');
     }
 
     public function create()
     {
-        $data['title'] = 'Tambah Akun Manajemen';
+        $data['title'] = 'Tambah Manajemen';
         $data['unit_list'] = $this->Admin_model->get_all_unit();
         $this->load->view('templates/header', $data);
         $this->load->view('admin/manajemen/create', $data);
@@ -57,7 +58,7 @@ class Manajemen extends CI_Controller
 
     public function edit($user_id)
     {
-        $data['title'] = 'Edit Akun Manajemen';
+        $data['title'] = 'Ubah Manajemen';
         $data['user'] = $this->User_model->get_user_by_id('guru', $user_id);
         $data['unit_list'] = $this->Admin_model->get_all_unit();
         $this->load->view('templates/header', $data);

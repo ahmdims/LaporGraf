@@ -14,16 +14,17 @@ class Siswa extends CI_Controller
 
     public function index()
     {
-        $data['title'] = 'Setup Akun Siswa';
-        $data['user_list'] = $this->User_model->get_users('siswa');
-        $this->load->view('templates/header', $data);
+        $data['user_list'] = $this->User_model->get_users_by_role('siswa');
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/nav_admin');
         $this->load->view('admin/siswa/index', $data);
         $this->load->view('templates/footer');
     }
 
     public function create()
     {
-        $data['title'] = 'Tambah Akun Siswa';
+        $data['title'] = 'Tambah Siswa';
         $this->load->view('templates/header', $data);
         $this->load->view('admin/siswa/create', $data);
         $this->load->view('templates/footer');
@@ -54,7 +55,7 @@ class Siswa extends CI_Controller
 
     public function edit($user_id)
     {
-        $data['title'] = 'Edit Akun Siswa';
+        $data['title'] = 'Ubah Siswa';
         $data['user'] = $this->User_model->get_user_by_id('siswa', $user_id);
         $this->load->view('templates/header', $data);
         $this->load->view('admin/siswa/edit', $data);

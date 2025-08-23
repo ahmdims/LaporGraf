@@ -16,7 +16,7 @@ class Status extends CI_Controller
 
     public function index()
     {
-        $data['title'] = 'Setup Master Status';
+        $data['title'] = 'Kelola Status';
         $data['status_list'] = $this->Status_model->get_all();
 
         $this->load->view('templates/header', $data);
@@ -26,7 +26,7 @@ class Status extends CI_Controller
 
     public function create()
     {
-        $data['title'] = 'Tambah Status Baru';
+        $data['title'] = 'Tambah Status';
         $data['unit_list'] = $this->Admin_model->get_all_unit();
         $this->load->view('templates/header', $data);
         $this->load->view('admin/status/create', $data);
@@ -53,9 +53,14 @@ class Status extends CI_Controller
 
     public function edit($id)
     {
-        $data['title'] = 'Edit Status';
-        $data['status'] = $this->db->get_where('status', ['id_status' => $id])->row(); // Helper cepat
+        $data['title'] = 'Ubah Status';
+        $data['status'] = $this->db->get_where('status', ['id_status' => $id])->row();
         $data['unit_list'] = $this->Admin_model->get_all_unit();
+
+        if (!$data['status']) {
+            redirect('admin/status');
+        }
+
         $this->load->view('templates/header', $data);
         $this->load->view('admin/status/edit', $data);
         $this->load->view('templates/footer');
