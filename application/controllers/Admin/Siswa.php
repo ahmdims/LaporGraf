@@ -33,7 +33,7 @@ class Siswa extends CI_Controller
 
     public function store()
     {
-        $this->form_validation->set_rules('user_id', 'NIS', 'required|is_unique[siswa.user_id]');
+        $this->form_validation->set_rules('user_id', 'ID', 'required|is_unique[siswa.user_id]');
         $this->form_validation->set_rules('nama', 'Nama', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
 
@@ -60,6 +60,10 @@ class Siswa extends CI_Controller
     {
         $data['title'] = 'Ubah Siswa';
         $data['user'] = $this->User_model->get_user_by_id($user_id, 'siswa');
+
+        if (empty($data['user'])) {
+            show_404();
+        }
 
         $this->load->view('templates/header', $data);
         $this->load->view('admin/siswa/edit', $data);
@@ -94,7 +98,7 @@ class Siswa extends CI_Controller
     public function delete($user_id)
     {
         $this->User_model->delete('siswa', $user_id);
-        $this->session->set_flashdata('success', 'Akun siswa berhasil dihapus.');
+        $this->session->set_flashdata('success', 'Akun siswa berhasil dihapus!');
         redirect('admin/siswa');
     }
 }

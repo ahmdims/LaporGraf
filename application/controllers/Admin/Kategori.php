@@ -49,7 +49,7 @@ class Kategori extends CI_Controller
                 'petugas' => $this->input->post('petugas')
             ];
             $this->Kategori_model->insert($data);
-            $this->session->set_flashdata('success', 'Kategori baru berhasil ditambahkan!');
+            $this->session->set_flashdata('success', 'Kategori berhasil dibuat!');
             redirect('admin/kategori');
         }
     }
@@ -61,7 +61,7 @@ class Kategori extends CI_Controller
         $data['unit_list'] = $this->Admin_model->get_all_unit();
 
         if (!$data['kategori']) {
-            redirect('admin/kategori');
+            show_404();
         }
 
         $this->load->view('templates/header', $data);
@@ -90,7 +90,7 @@ class Kategori extends CI_Controller
     public function delete($id)
     {
         $this->Kategori_model->delete($id);
-        $this->session->set_flashdata('success', 'Kategori berhasil dihapus.');
+        $this->session->set_flashdata('success', 'Kategori berhasil dihapus!');
         redirect('admin/kategori');
     }
 }

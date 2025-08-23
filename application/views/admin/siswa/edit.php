@@ -34,7 +34,7 @@
                         <?= form_open('admin/siswa/update/' . $user->user_id); ?>
 
                         <div class="mb-10 fv-row">
-                            <label class="required form-label">NIS</label>
+                            <label class="required form-label">ID</label>
                             <input type="text" class="form-control mb-2" value="<?= $user->user_id; ?>" readonly />
                         </div>
 
@@ -62,7 +62,7 @@
                         <div class="mb-10 fv-row">
                             <label class="form-label">Nomor Telepon</label>
                             <input type="text" name="no_telp" class="form-control mb-2"
-                                value="<?= htmlspecialchars($user->no_telp); ?>" placeholder="Contoh: 081234567890" />
+                                value="<?= htmlspecialchars($user->no_telp); ?>" />
                         </div>
 
                         <div class="mb-10 fv-row">

@@ -46,7 +46,7 @@ class Status extends CI_Controller
                 'petugas' => $this->input->post('petugas')
             ];
             $this->Status_model->insert($data);
-            $this->session->set_flashdata('success', 'Status baru berhasil ditambahkan!');
+            $this->session->set_flashdata('success', 'Status berhasil dibuat!');
             redirect('admin/status');
         }
     }
@@ -58,7 +58,7 @@ class Status extends CI_Controller
         $data['unit_list'] = $this->Admin_model->get_all_unit();
 
         if (!$data['status']) {
-            redirect('admin/status');
+            show_404();
         }
 
         $this->load->view('templates/header', $data);
@@ -87,7 +87,7 @@ class Status extends CI_Controller
     public function delete($id)
     {
         $this->Status_model->delete($id);
-        $this->session->set_flashdata('success', 'Status berhasil dihapus.');
+        $this->session->set_flashdata('success', 'Status berhasil dihapus!');
         redirect('admin/status');
     }
 }

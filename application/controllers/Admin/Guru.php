@@ -33,7 +33,7 @@ class Guru extends CI_Controller
 
     public function store()
     {
-        $this->form_validation->set_rules('user_id', 'NIP/ID', 'required|is_unique[guru.user_id]');
+        $this->form_validation->set_rules('user_id', 'ID', 'required|is_unique[guru.user_id]');
         $this->form_validation->set_rules('nama', 'Nama', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
 
@@ -46,9 +46,12 @@ class Guru extends CI_Controller
                 'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
                 'jk' => $this->input->post('jk'),
                 'role' => 'Guru',
-                'keterangan' => 'Guru'
+                'keterangan' => 'Guru',
+                'no_telp' => $this->input->post('no_telp'),
+                'alamat' => $this->input->post('alamat'),
             ];
-            $this->User_model->insert('guru', $data);
+            $this->User_model->create_user($data, 'guru');
+
             $this->session->set_flashdata('success', 'Akun guru berhasil dibuat!');
             redirect('admin/guru');
         }
@@ -56,41 +59,41 @@ class Guru extends CI_Controller
 
     public function edit($user_id)
     {
-        // Mengambil data guru berdasarkan ID dan role
-        // Perhatikan penambahan 'guru' sebagai argumen kedua
+        $data['title'] = 'Ubah Guru';
         $data['user'] = $this->User_model->get_user_by_id($user_id, 'guru');
 
         if (empty($data['user'])) {
             show_404();
         }
 
-        $this->load->view('templates/header');
-        $this->load->view('templates/nav_admin');
+        $this->load->view('templates/header', $data);
         $this->load->view('admin/guru/edit', $data);
         $this->load->view('templates/footer');
     }
 
-    public function update($user_id)
+    public function update($id)
     {
-        $this->form_validation->set_rules('nama', 'Nama', 'required');
+        $data = [
+            'nama' => $this->input->post('nama'),
+            'jk' => $this->input->post('jk'),
+            'no_telp' => $this->input->post('no_telp'),
+            'alamat' => $this->input->post('alamat')
+        ];
 
-        if ($this->form_validation->run() == FALSE) {
-            $this->edit($user_id);
-        } else {
-            $data = ['nama' => $this->input->post('nama'), 'jk' => $this->input->post('jk')];
-            if ($this->input->post('password')) {
-                $data['password'] = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
-            }
-            $this->User_model->update('guru', $user_id, $data);
-            $this->session->set_flashdata('success', 'Akun guru berhasil diperbarui!');
-            redirect('admin/guru');
+        if ($this->input->post('password')) {
+            $data['password'] = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
         }
+
+        $this->User_model->update_user($id, $data, 'guru');
+
+        $this->session->set_flashdata('success', 'Akun guru berhasil diperbarui!');
+        redirect('admin/guru');
     }
 
     public function delete($user_id)
     {
         $this->User_model->delete('guru', $user_id);
-        $this->session->set_flashdata('success', 'Akun guru berhasil dihapus.');
+        $this->session->set_flashdata('success', 'Akun guru berhasil dihapus!');
         redirect('admin/guru');
     }
 }
