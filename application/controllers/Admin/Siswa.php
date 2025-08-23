@@ -45,10 +45,12 @@ class Siswa extends CI_Controller
                 'nama' => $this->input->post('nama'),
                 'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
                 'jk' => $this->input->post('jk'),
-                'role' => 'Siswa',
-                'keterangan' => 'Siswa'
+                'role' => 'siswa',
+                'no_telp' => $this->input->post('no_telp'),
+                'alamat' => $this->input->post('alamat')
             ];
-            $this->User_model->insert('siswa', $data);
+
+            $this->User_model->create_user($data, 'siswa');
             $this->session->set_flashdata('success', 'Akun siswa berhasil dibuat!');
             redirect('admin/siswa');
         }
@@ -57,7 +59,8 @@ class Siswa extends CI_Controller
     public function edit($user_id)
     {
         $data['title'] = 'Ubah Siswa';
-        $data['user'] = $this->User_model->get_user_by_id('siswa', $user_id);
+        $data['user'] = $this->User_model->get_user_by_id($user_id, 'siswa');
+
         $this->load->view('templates/header', $data);
         $this->load->view('admin/siswa/edit', $data);
         $this->load->view('templates/footer');
@@ -72,13 +75,17 @@ class Siswa extends CI_Controller
         } else {
             $data = [
                 'nama' => $this->input->post('nama'),
-                'jk' => $this->input->post('jk')
+                'jk' => $this->input->post('jk'),
+                'no_telp' => $this->input->post('no_telp'),
+                'alamat' => $this->input->post('alamat')
             ];
 
             if ($this->input->post('password')) {
                 $data['password'] = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
             }
-            $this->User_model->update('siswa', $user_id, $data);
+
+            $this->User_model->update_user($user_id, $data, 'siswa');
+
             $this->session->set_flashdata('success', 'Akun siswa berhasil diperbarui!');
             redirect('admin/siswa');
         }

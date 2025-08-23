@@ -4,7 +4,7 @@
             <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center me-3">
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                        Edit Akun Siswa
+                        Ubah Siswa
                     </h1>
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <li class="breadcrumb-item text-muted">
@@ -21,7 +21,7 @@
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-400 w-5px h-2px"></span>
                         </li>
-                        <li class="breadcrumb-item text-muted">Edit Akun Siswa</li>
+                        <li class="breadcrumb-item text-muted">Edit Siswa</li>
                     </ul>
                 </div>
             </div>
@@ -52,11 +52,23 @@
 
                         <div class="mb-10 fv-row">
                             <label class="required form-label">Jenis Kelamin</label>
-                            <select name="jk" class="form-select" data-control="select2"
-                                data-placeholder="Pilih Jenis Kelamin" required>
+                            <select name="jk" class="form-select" data-control="select2" data-hide-search="true"
+                                required>
                                 <option value="L" <?= ($user->jk == 'L') ? 'selected' : ''; ?>>Laki-laki</option>
                                 <option value="P" <?= ($user->jk == 'P') ? 'selected' : ''; ?>>Perempuan</option>
                             </select>
+                        </div>
+
+                        <div class="mb-10 fv-row">
+                            <label class="form-label">Nomor Telepon</label>
+                            <input type="text" name="no_telp" class="form-control mb-2"
+                                value="<?= htmlspecialchars($user->no_telp); ?>" placeholder="Contoh: 081234567890" />
+                        </div>
+
+                        <div class="mb-10 fv-row">
+                            <label class="form-label">Alamat</label>
+                            <textarea name="alamat" class="form-control mb-2" rows="3"
+                                placeholder="Masukkan alamat lengkap"><?= htmlspecialchars($user->alamat); ?></textarea>
                         </div>
 
                         <div class="d-flex justify-content-end mt-5">
