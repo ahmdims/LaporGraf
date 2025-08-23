@@ -62,9 +62,8 @@
                         <div class="mb-10 fv-row">
                             <label class="required form-label">Unit (Keterangan)</label>
                             <select name="keterangan" class="form-select" data-control="select2" required>
-                                <option value="">Pilih Unit</option>
                                 <?php foreach ($unit_list as $unit): ?>
-                                    <option value="<?= $unit->keterangan; ?>" <?= ($user->keterangan == $unit->keterangan) ? 'selected' : ''; ?>><?= $unit->keterangan; ?></option>
+                                    <option value="<?= $unit->keterangan; ?>"><?= $unit->keterangan; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>

@@ -65,7 +65,7 @@
                             <label class="required form-label">Unit (Keterangan)</label>
                             <select name="keterangan" class="form-select" data-control="select2"
                                 data-placeholder="Pilih Unit">
-                                <option value="">Pilih Unit</option>
+                                <option value="" disabled selected>Pilih Unit</option>
                                 <?php foreach ($unit_list as $unit): ?>
                                     <option value="<?= $unit->keterangan; ?>"><?= $unit->keterangan; ?></option>
                                 <?php endforeach; ?>
