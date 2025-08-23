@@ -23,7 +23,7 @@
                             <span class="mb-2">
                                 <i class="ki-outline ki-home-2 fs-1"></i>
                             </span>
-                            <span class="fs-7 fw-bold">Dasbor</span>
+                            <span class="fs-7 fw-bold">Beranda</span>
                         </a>
                     </div>
                     <div class="col mb-4">
@@ -31,7 +31,7 @@
                             class="<?= ($this->uri->segment(2) == 'kategori') ? 'active' : ''; ?> btn btn-icon btn-outline btn-bg-light btn-active-light-primary btn-flex flex-column flex-center w-lg-90px h-lg-90px w-70px h-70px border-gray-200"
                             data-kt-button="true">
                             <span class="mb-2">
-                                <i class="ki-outline ki-star fs-1"></i>
+                                <i class="ki-outline ki-category fs-1"></i>
                             </span>
                             <span class="fs-7 fw-bold">Kategori</span>
                         </a>
@@ -85,7 +85,7 @@
                             class="<?= ($this->uri->segment(2) == 'manajemen') ? 'active' : ''; ?> btn btn-icon btn-outline btn-bg-light btn-active-light-primary btn-flex flex-column flex-center w-lg-90px h-lg-90px w-70px h-70px border-gray-200"
                             data-kt-button="true">
                             <span class="mb-2">
-                                <i class="ki-outline ki-award fs-1"></i>
+                                <i class="ki-outline ki-message-text fs-1"></i>
                             </span>
                             <span class="fs-7 fw-bold">Pengaduan</span>
                         </a>
@@ -95,7 +95,7 @@
                             class="<?= ($this->uri->segment(2) == 'manajemen') ? 'active' : ''; ?> btn btn-icon btn-outline btn-bg-light btn-active-light-primary btn-flex flex-column flex-center w-lg-90px h-lg-90px w-70px h-70px border-gray-200"
                             data-kt-button="true">
                             <span class="mb-2">
-                                <i class="ki-outline ki-award fs-1"></i>
+                                <i class="ki-outline ki-address-book fs-1"></i>
                             </span>
                             <span class="fs-7 fw-bold">Monitoring</span>
                         </a>
