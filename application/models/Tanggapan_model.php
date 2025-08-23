@@ -35,4 +35,9 @@ class Tanggapan_model extends CI_Model
         $this->db->where('k.petugas', $unit);
         return $this->db->get()->row();
     }
+
+    public function insert_tanggapan($data)
+    {
+        return $this->db->insert('balasan', $data);
+    }
 }

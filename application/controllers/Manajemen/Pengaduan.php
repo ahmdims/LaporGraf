@@ -47,22 +47,23 @@ class Pengaduan extends CI_Controller
 
     public function beri_tanggapan($id_pengaduan)
     {
-        $this->form_validation->set_rules('isi_balasan', 'Isi Tanggapan', 'required');
-        $this->form_validation->set_rules('status', 'Status', 'required');
+        $this->form_validation->set_rules('isi_balasan', 'Isi Balasan', 'required');
+        $this->form_validation->set_rules('id_status', 'Status', 'required');
 
         if ($this->form_validation->run() == FALSE) {
             $this->detail($id_pengaduan);
         } else {
-            $data_balasan = [
+            $data = [
                 'id_pengaduan' => $id_pengaduan,
                 'id_kategori' => $this->input->post('id_kategori'),
+                'id_status' => $this->input->post('id_status'),
                 'date' => date('Y-m-d'),
-                'status' => $this->input->post('status'),
                 'isi_balasan' => $this->input->post('isi_balasan'),
-                'konfirmasi' => '1'
+                'konfirmasi' => '1',
             ];
-            $this->Tanggapan_model->insert($data_balasan);
+
             $this->Pengaduan_model->update($id_pengaduan, ['konfirmasi' => '1']);
+            $this->Tanggapan_model->insert_tanggapan($data);
 
             $this->session->set_flashdata('success', 'Tanggapan berhasil dikirim!');
             redirect('manajemen/pengaduan/detail/' . $id_pengaduan);

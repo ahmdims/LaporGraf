@@ -40,27 +40,25 @@ class Pengaduan_model extends CI_Model
     {
         $this->db->where('id_pengaduan', $id);
         $this->db->where('user_id', $userId);
-        $this->db->where('konfirmasi', '0'); // Hanya yang belum dikonfirmasi
+        $this->db->where('konfirmasi', '0');
         return $this->db->get('pengaduan')->row();
     }
 
     public function get_pengaduan_detail_for_user($id_pengaduan, $user_id)
     {
-        $this->db->where('id_pengaduan', $id_pengaduan);
-        $this->db->where('user_id', $user_id);
-        $pengaduan = $this->db->get('pengaduan')->row();
+        $pengaduan = $this->db->get_where('pengaduan', ['id_pengaduan' => $id_pengaduan, 'user_id' => $user_id])->row();
 
         if ($pengaduan) {
-            $this->db->where('id_pengaduan', $id_pengaduan);
-            $balasan_query = $this->db->get('balasan');
-            $pengaduan->balasan = $balasan_query->result();
+            $this->db->select('b.*, s.status');
+            $this->db->from('balasan as b');
+            $this->db->join('status as s', 'b.id_status = s.id_status');
+            $this->db->where('b.id_pengaduan', $id_pengaduan);
+            $balasan = $this->db->get()->result();
 
-            if ($pengaduan->balasan) {
-                foreach ($pengaduan->balasan as $key => $balas) {
-                    $this->db->where('id_balasan', $balas->id_balasan);
-                    $kepuasan_query = $this->db->get('kepuasan');
-                    $pengaduan->balasan[$key]->kepuasan = $kepuasan_query->row();
-                }
+            $pengaduan->balasan = $balasan;
+
+            foreach ($pengaduan->balasan as &$balas) {
+                $balas->kepuasan = $this->db->get_where('kepuasan', ['id_balasan' => $balas->id_balasan])->row();
             }
         }
 
