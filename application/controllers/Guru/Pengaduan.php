@@ -54,7 +54,6 @@ class Pengaduan extends CI_Controller
                 'deskripsi' => $this->input->post('deskripsi'),
                 'date' => date('Y-m-d'),
                 'tempat' => $this->input->post('tempat'),
-                'konfirmasi' => '0'
             ];
 
             $this->Pengaduan_model->insert($data);
@@ -103,32 +102,9 @@ class Pengaduan extends CI_Controller
 
                 $this->Kepuasan_model->insert($data);
 
-                $this->Tanggapan_model->update($id_balasan, ['konfirmasi' => '1']);
-
                 $this->session->set_flashdata('success', 'Terima kasih atas feedback Anda!');
             }
             redirect('guru/pengaduan/detail/' . $id_pengaduan);
-        }
-    }
-
-    public function hapus_kepuasan($id_kepuasan)
-    {
-        $kepuasan = $this->Kepuasan_model->get_by_id($id_kepuasan);
-
-        if ($kepuasan) {
-            $id_balasan = $kepuasan->id_balasan;
-            $balasan = $this->Tanggapan_model->get_by_id($id_balasan);
-            $id_pengaduan = $balasan->id_pengaduan;
-
-            $this->Kepuasan_model->delete($id_kepuasan);
-
-            $this->Tanggapan_model->update($id_balasan, ['konfirmasi' => '0']);
-
-            $this->session->set_flashdata('success', 'Penilaian kepuasan berhasil dihapus.');
-            redirect('guru/pengaduan/detail/' . $id_pengaduan);
-        } else {
-            $this->session->set_flashdata('error', 'Data kepuasan tidak ditemukan.');
-            redirect('guru/pengaduan');
         }
     }
 
@@ -158,7 +134,7 @@ class Pengaduan extends CI_Controller
 
         if (!$pengaduan) {
             $this->session->set_flashdata('error', 'Gagal memperbarui: Pengaduan tidak ditemukan atau sudah ditanggapi.');
-            redirect('siswa/pengaduan');
+            redirect('guru/pengaduan');
         }
 
         $this->form_validation->set_rules('judul', 'Judul', 'required');

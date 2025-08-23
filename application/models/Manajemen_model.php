@@ -6,12 +6,14 @@ class Manajemen_model extends CI_Model
 
     public function get_pengaduan_by_unit($unit)
     {
-        $this->db->select('p.*, k.nama_kategori, COALESCE(s.nama, g.nama) as nama_pelapor');
-        $this->db->from('pengaduan p');
-        $this->db->join('kategori k', 'p.id_kategori = k.id_kategori');
-        $this->db->join('siswa s', 'p.user_id = s.user_id', 'left');
-        $this->db->join('guru g', 'p.user_id = g.user_id', 'left');
+        $this->db->select('p.*, k.nama_kategori, COALESCE(s.nama, g.nama) as nama_pelapor, COUNT(b.id_balasan) as jumlah_balasan');
+        $this->db->from('pengaduan as p');
+        $this->db->join('kategori as k', 'p.id_kategori = k.id_kategori');
+        $this->db->join('balasan as b', 'p.id_pengaduan = b.id_pengaduan', 'left');
+        $this->db->join('siswa as s', 'p.user_id = s.user_id', 'left');
+        $this->db->join('guru as g', 'p.user_id = g.user_id', 'left');
         $this->db->where('k.petugas', $unit);
+        $this->db->group_by('p.id_pengaduan');
         $this->db->order_by('p.date', 'DESC');
         return $this->db->get()->result();
     }

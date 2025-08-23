@@ -32,16 +32,17 @@ class Pengaduan extends CI_Controller
         $data['title'] = 'Detail Pengaduan';
 
         $data['pengaduan'] = $this->Pengaduan_model->get_by_id($id_pengaduan);
-        $data['balasan_list'] = $this->Tanggapan_model->get_tanggapan_by_pengaduan($id_pengaduan);
-
-        $unit_petugas = $this->session->userdata('keterangan');
-
-        $data['status_list'] = $this->Status_model->get_by_petugas($unit_petugas);
-
         if (!$data['pengaduan']) {
             $this->session->set_flashdata('error', 'Pengaduan tidak ditemukan.');
             redirect('manajemen/pengaduan');
         }
+
+        $data['balasan_list'] = $this->Tanggapan_model->get_tanggapan_by_pengaduan($id_pengaduan);
+        $unit_petugas = $this->session->userdata('keterangan');
+        $data['status_list'] = $this->Status_model->get_by_petugas($unit_petugas);
+
+        // Menentukan apakah pengaduan sudah memiliki balasan atau belum
+        $data['sudah_ditanggapi'] = count($data['balasan_list']) > 0;
 
         $this->load->view('templates/header', $data);
         $this->load->view('manajemen/pengaduan/detail', $data);
@@ -56,6 +57,13 @@ class Pengaduan extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->detail($id_pengaduan);
         } else {
+            // Cek lagi agar tidak ada duplikasi jika user membuka 2 tab
+            $balasan_exist = $this->Tanggapan_model->get_tanggapan_by_pengaduan($id_pengaduan);
+            if (count($balasan_exist) > 0) {
+                $this->session->set_flashdata('error', 'Pengaduan ini sudah ditanggapi!');
+                redirect('manajemen/pengaduan/detail/' . $id_pengaduan);
+            }
+
             $data = [
                 'id_pengaduan' => $id_pengaduan,
                 'id_kategori' => $this->input->post('id_kategori'),

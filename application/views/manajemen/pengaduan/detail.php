@@ -41,27 +41,36 @@
                 <h6 class="m-0 font-weight-bold text-primary">Tanggapan</h6>
             </div>
             <div class="card-body">
-                <div class="card-body">
-                    <?php if (empty($balasan_list)): ?>
-                        <p class="text-center">Belum ada tanggapan untuk pengaduan ini.</p>
-                    <?php else: ?>
-                        <?php foreach ($balasan_list as $balas): ?>
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <span class="badge badge-info mb-2"><?= htmlspecialchars($balas->status); ?></span>
-                                    <p class="card-text"><?= nl2br(htmlspecialchars($balas->isi_balasan)); ?></p>
+                <?php if (empty($balasan_list)): ?>
+                    <p class="text-center">Belum ada tanggapan untuk pengaduan ini.</p>
+                <?php else: ?>
+                    <?php foreach ($balasan_list as $balas): ?>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <span class="badge badge-info mb-2"><?= htmlspecialchars($balas->status); ?></span>
+                                <p class="card-text"><?= nl2br(htmlspecialchars($balas->isi_balasan)); ?></p>
 
+                                <?php
+                                $kepuasan_diberikan = isset($balas->sudah_diberi_kepuasan) && $balas->sudah_diberi_kepuasan;
+                                ?>
+
+                                <?php if (!$kepuasan_diberikan): ?>
                                     <a href="<?= site_url('manajemen/pengaduan/edit_tanggapan/' . $balas->id_balasan); ?>"
                                         class="btn btn-sm btn-warning">Ubah</a>
                                     <a href="<?= site_url('manajemen/pengaduan/hapus_tanggapan/' . $balas->id_balasan); ?>"
                                         class="btn btn-sm btn-danger"
                                         onclick="return confirm('Apakah Anda yakin ingin menghapus tanggapan ini?');">Hapus</a>
-                                </div>
+                                <?php else: ?>
+                                    <p class="text-sm text-muted mt-2">Tanggapan tidak dapat diubah atau dihapus karena pelapor
+                                        sudah memberikan penilaian kepuasan.</p>
+                                <?php endif; ?>
                             </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
 
-                    <div class="card shadow mb-4">
+                <?php if (!$sudah_ditanggapi): ?>
+                    <div class="card shadow">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Beri Tanggapan</h6>
                         </div>
@@ -77,7 +86,8 @@
                                 <select name="id_status" class="form-control" required>
                                     <option value="">-- Pilih Status --</option>
                                     <?php foreach ($status_list as $status): ?>
-                                        <option value="<?= $status->id_status; ?>"><?= htmlspecialchars($status->status); ?>
+                                        <option value="<?= $status->id_status; ?>">
+                                            <?= htmlspecialchars($status->status); ?>
                                         </option>
                                     <?php endforeach; ?>
                                 </select>
@@ -86,10 +96,11 @@
                             <?= form_close(); ?>
                         </div>
                     </div>
-                </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
+</div>
 
-    <a href="<?= site_url('manajemen/pengaduan'); ?>" class="btn btn-secondary mb-4">&larr; Kembali ke Daftar
-        Pengaduan</a>
+<a href="<?= site_url('manajemen/pengaduan'); ?>" class="btn btn-secondary mb-4">&larr; Kembali ke Daftar
+    Pengaduan</a>
