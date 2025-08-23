@@ -1,64 +1,53 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-?><!DOCTYPE html>
+defined('BASEPATH') or exit('No direct script access allowed');
+?>
+
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<title>Database Error</title>
-<style type="text/css">
-
-::selection { background-color: #E13300; color: white; }
-::-moz-selection { background-color: #E13300; color: white; }
-
-body {
-	background-color: #fff;
-	margin: 40px;
-	font: 13px/20px normal Helvetica, Arial, sans-serif;
-	color: #4F5155;
-}
-
-a {
-	color: #003399;
-	background-color: transparent;
-	font-weight: normal;
-}
-
-h1 {
-	color: #444;
-	background-color: transparent;
-	border-bottom: 1px solid #D0D0D0;
-	font-size: 19px;
-	font-weight: normal;
-	margin: 0 0 14px 0;
-	padding: 14px 15px 10px 15px;
-}
-
-code {
-	font-family: Consolas, Monaco, Courier New, Courier, monospace;
-	font-size: 12px;
-	background-color: #f9f9f9;
-	border: 1px solid #D0D0D0;
-	color: #002166;
-	display: block;
-	margin: 14px 0 14px 0;
-	padding: 12px 10px 12px 10px;
-}
-
-#container {
-	margin: 10px;
-	border: 1px solid #D0D0D0;
-	box-shadow: 0 0 8px #D0D0D0;
-}
-
-p {
-	margin: 12px 15px 12px 15px;
-}
-</style>
+	<title>500 - LaporGraf</title>
+	<meta charset="utf-8" />
+	<link rel="shortcut icon" href="asset/media/logos/favicon.svg" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+	<link href="asset/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+	<link href="asset/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+	<link href="asset/css/style.bundle.css" rel="stylesheet" type="text/css" />
+	<script>
+		if (window.top != window.self) {
+			window.top.location.replace(window.self.location.href);
+		}
+	</script>
 </head>
-<body>
-	<div id="container">
-		<h1><?php echo $heading; ?></h1>
-		<?php echo $message; ?>
+
+<body id="kt_body" class="app-blank bgi-size-cover bgi-attachment-fixed bgi-position-center">
+	<div class="d-flex flex-column flex-root" id="kt_app_root">
+		<style>
+			body {
+				background-image: url('asset/media/auth/bg7.jpg');
+			}
+
+			[data-bs-theme="dark"] body {
+				background-image: url('asset/media/auth/bg7-dark.jpg');
+			}
+		</style>
+		<div class="d-flex flex-column flex-center flex-column-fluid">
+			<div class="d-flex flex-column flex-center text-center p-10">
+				<div class="card card-flush w-lg-650px py-5">
+					<div class="card-body py-15 py-lg-20">
+						<h1 class="fw-bolder fs-2hx text-gray-900 mb-4"><?php echo $heading; ?></h1>
+						<div class="fw-semibold fs-6 text-gray-500 mb-7"><?php echo $message; ?>.</div>
+						<div class="mb-3">
+							<img src="asset/media/auth/500-error" class="mw-100 mh-300px theme-light-show" alt="" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
+	<script>var hostUrl = "asset/";</script>
+	<script src="asset/plugins/global/plugins.bundle.js"></script>
+	<script src="asset/js/scripts.bundle.js>"></script>
 </body>
+
 </html>
