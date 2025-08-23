@@ -76,8 +76,10 @@
                                     <tr>
                                         <td>#<?= $s->id_status; ?></td>
                                         <td><?= htmlspecialchars($s->status); ?></td>
-                                        <td><span
-                                                class="badge badge-light-primary"><?= htmlspecialchars($s->petugas); ?></span>
+                                        <td>
+                                            <span class="badge badge-light-primary"><?= htmlspecialchars($s->petugas); ?>
+                                            </span>
+                                        </td>
                                         </td>
                                         <td class="text-end">
                                             <a href="#"

@@ -76,8 +76,10 @@
                                     <tr>
                                         <td>#<?= $k->id_kategori; ?></td>
                                         <td><?= htmlspecialchars($k->nama_kategori); ?></td>
-                                        <td><span
-                                                class="badge badge-light-primary"><?= htmlspecialchars($k->petugas); ?></span>
+                                        <td>
+                                            <span class="badge badge-light-primary"><?= htmlspecialchars($k->petugas); ?>
+                                            </span>
+                                        </td>
                                         <td class="text-end">
                                             <a href="#"
                                                 class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary"
