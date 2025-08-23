@@ -37,7 +37,6 @@
                             <label class="required form-label">Status</label>
                             <input type="text" name="status" class="form-control mb-2"
                                 placeholder="Status" required />
-                            <div class="text-muted fs-7">Status wajib diisi dan disarankan unik.</div>
                         </div>
 
                         <div class="mb-10 fv-row">

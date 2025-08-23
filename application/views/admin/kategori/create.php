@@ -37,7 +37,6 @@
                             <label class="required form-label">Kategori</label>
                             <input type="text" name="nama_kategori" class="form-control mb-2" placeholder="Kategori"
                                 required />
-                            <div class="text-muted fs-7">Kategori wajib diisi dan disarankan unik.</div>
                         </div>
 
                         <div class="mb-10 fv-row">
