@@ -48,16 +48,16 @@ class Auth extends CI_Controller
                 $this->session->set_userdata($session_data);
 
                 switch ($user->role) {
-                    case 'Admin':
+                    case 'admin':
                         redirect('admin/dashboard');
                         break;
-                    case 'Manajemen':
+                    case 'manajemen':
                         redirect('manajemen/dashboard');
                         break;
-                    case 'Guru':
+                    case 'guru':
                         redirect('guru/dashboard');
                         break;
-                    case 'Siswa':
+                    case 'siswa':
                         redirect('siswa/dashboard');
                         break;
                     default:

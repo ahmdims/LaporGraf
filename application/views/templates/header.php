@@ -31,13 +31,13 @@
 
             <?php
             $role = $this->session->userdata('role');
-            if ($role == 'Admin') {
+            if ($role == 'admin') {
                 $this->load->view('templates/nav_admin');
-            } elseif ($role == 'Manajemen') {
+            } elseif ($role == 'manajemen') {
                 $this->load->view('templates/nav_manajemen');
-            } elseif ($role == 'Guru') {
+            } elseif ($role == 'guru') {
                 $this->load->view('templates/nav_guru');
-            } elseif ($role == 'Siswa') {
+            } elseif ($role == 'siswa') {
                 $this->load->view('templates/nav_siswa');
             }
             ?>

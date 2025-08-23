@@ -7,7 +7,7 @@ class Kategori extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        if ($this->session->userdata('role') != 'Admin') {
+        if ($this->session->userdata('role') != 'admin') {
             redirect('auth');
         }
         $this->load->model('Kategori_model');
