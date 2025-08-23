@@ -18,7 +18,7 @@ class Auth extends CI_Controller
             $role = $this->session->userdata('role');
             redirect(strtolower($role) . '/dashboard');
         }
-        $this->load->view('login_view');
+        $this->load->view('login');
     }
 
     public function process_login()
@@ -65,7 +65,7 @@ class Auth extends CI_Controller
                         break;
                 }
             } else {
-                $this->session->set_flashdata('error', 'Invalid User ID or Password');
+                $this->session->set_flashdata('error', 'ID pengguna atau Password salah');
                 redirect('auth');
             }
         }

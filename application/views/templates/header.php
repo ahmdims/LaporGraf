@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-    <base href="<?= base_url('asset/'); ?>" />
     <title><?= $title; ?> - LaporGraf</title>
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="<?= base_url('asset/media/logos/favicon.ico'); ?>" />
@@ -17,6 +16,8 @@
         }
     </script>
 </head>
+
+<?php $this->load->view('templates/flasher'); ?>
 
 <body id="kt_app_body" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true"
     data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true"

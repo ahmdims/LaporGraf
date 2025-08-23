@@ -68,7 +68,7 @@
                                     <th class="min-w-100px">ID</th>
                                     <th class="min-w-100px">Kategori</th>
                                     <th class="min-w-100px">Unit Terkait (Petugas)</th>
-                                    <th class="min-w-100px">Unit</th>
+                                    <th class="text-end min-w-100px">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody class="fw-semibold text-gray-600">
