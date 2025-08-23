@@ -34,10 +34,6 @@
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">Login</button>
                         <?= form_close(); ?>
-
-                        <p class="text-center mt-3">
-                            Belum punya akun? <a href="<?= site_url('auth/register'); ?>">Daftar di sini</a>
-                        </p>
                     </div>
                 </div>
             </div>

@@ -22,17 +22,10 @@ class Tanggapan_model extends CI_Model
 
     public function delete($id_balasan)
     {
-        // Hapus balasan
         $this->db->where('id_balasan', $id_balasan);
         $this->db->delete('balasan');
     }
 
-    /**
-     * Memeriksa apakah sebuah tanggapan (balasan) dimiliki oleh unit manajemen yang benar.
-     * @param int $id_balasan
-     * @param string $unit
-     * @return object|null
-     */
     public function get_tanggapan_for_unit($id_balasan, $unit)
     {
         $this->db->select('b.*, k.petugas');

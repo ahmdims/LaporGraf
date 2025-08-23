@@ -45,8 +45,11 @@
             <hr class="sidebar-divider d-none d-md-block">
 
             <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                <a href="<?= site_url('auth/logout'); ?>" class="btn rounded-circle border-0" id="sidebarToggle">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
             </div>
+
         </ul>
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">

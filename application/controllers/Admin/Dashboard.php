@@ -7,7 +7,6 @@ class Dashboard extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        // Proteksi halaman, hanya admin yang bisa akses
         if ($this->session->userdata('role') != 'Admin') {
             redirect('auth');
         }
@@ -19,7 +18,6 @@ class Dashboard extends CI_Controller
         $data['title'] = 'Admin Dashboard';
         $data['user'] = $this->session->userdata('nama');
 
-        // Ambil data statistik untuk admin
         $data['total_pengaduan'] = $this->Dashboard_model->count_pengaduan();
         $data['total_siswa'] = $this->Dashboard_model->count_siswa();
         $data['total_guru'] = $this->Dashboard_model->count_guru();

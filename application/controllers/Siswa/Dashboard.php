@@ -19,7 +19,6 @@ class Dashboard extends CI_Controller
         $data['user'] = $this->session->userdata('nama');
         $userId = $this->session->userdata('user_id');
 
-        // Ambil data statistik untuk siswa
         $data['pengaduan_saya'] = $this->Dashboard_model->count_pengaduan_by_user($userId);
         $data['pengaduan_diproses'] = $this->Dashboard_model->count_pengaduan_by_user($userId, '0');
         $data['pengaduan_selesai'] = $this->Dashboard_model->count_pengaduan_by_user($userId, '1');

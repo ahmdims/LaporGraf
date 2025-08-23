@@ -71,35 +71,6 @@ class Auth extends CI_Controller
         }
     }
 
-    public function register()
-    {
-        $this->load->view('register_view');
-    }
-
-    public function process_register()
-    {
-        $this->form_validation->set_rules('user_id', 'User ID (NIS)', 'required|trim|is_unique[siswa.user_id]');
-        $this->form_validation->set_rules('nama', 'Nama Lengkap', 'required|trim');
-        $this->form_validation->set_rules('password', 'Password', 'required|min_length[5]');
-
-        if ($this->form_validation->run() == FALSE) {
-            $this->load->view('register_view');
-        } else {
-            $data = [
-                'user_id' => htmlspecialchars($this->input->post('user_id', true)),
-                'nama' => htmlspecialchars($this->input->post('nama', true)),
-                'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-                'role' => 'Siswa',
-                'keterangan' => 'Siswa'
-            ];
-
-            $this->Auth_model->register_siswa($data);
-
-            $this->session->set_flashdata('success', 'Registrasi berhasil! Silakan login.');
-            redirect('auth');
-        }
-    }
-
     public function logout()
     {
         $this->session->sess_destroy();

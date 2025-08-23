@@ -4,11 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Manajemen_model extends CI_Model
 {
 
-    /**
-     * Mengambil semua pengaduan yang relevan untuk unit manajemen tertentu.
-     * @param string $unit Keterangan unit dari session (cth: 'Sarpras', 'Kesiswaan')
-     * @return array
-     */
     public function get_pengaduan_by_unit($unit)
     {
         $this->db->select('p.*, k.nama_kategori, COALESCE(s.nama, g.nama) as nama_pelapor');
@@ -21,12 +16,6 @@ class Manajemen_model extends CI_Model
         return $this->db->get()->result();
     }
 
-    /**
-     * Mengambil detail pengaduan, sekaligus memastikan user punya hak akses.
-     * @param int $id_pengaduan
-     * @param string $unit
-     * @return object|null
-     */
     public function get_pengaduan_detail($id_pengaduan, $unit)
     {
         $this->db->select('p.*, k.nama_kategori, COALESCE(s.nama, g.nama) as nama_pelapor');
@@ -44,11 +33,6 @@ class Manajemen_model extends CI_Model
         return $pengaduan;
     }
 
-    /**
-     * FUNGSI YANG HILANG: Mengambil kategori berdasarkan unit penanggung jawab.
-     * @param string $unit
-     * @return array
-     */
     public function get_kategori_by_unit($unit)
     {
         return $this->db->get_where('kategori', ['petugas' => $unit])->result();
