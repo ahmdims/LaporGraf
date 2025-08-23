@@ -32,10 +32,11 @@ class Pengaduan extends CI_Controller
         $data['title'] = 'Detail Pengaduan';
 
         $data['pengaduan'] = $this->Pengaduan_model->get_by_id($id_pengaduan);
-
         $data['balasan_list'] = $this->Tanggapan_model->get_tanggapan_by_pengaduan($id_pengaduan);
 
-        $data['status_list'] = $this->Status_model->get_all();
+        $unit_petugas = $this->session->userdata('keterangan');
+
+        $data['status_list'] = $this->Status_model->get_by_petugas($unit_petugas);
 
         if (!$data['pengaduan']) {
             $this->session->set_flashdata('error', 'Pengaduan tidak ditemukan.');
@@ -60,8 +61,7 @@ class Pengaduan extends CI_Controller
                 'id_kategori' => $this->input->post('id_kategori'),
                 'date' => date('Y-m-d'),
                 'id_status' => $this->input->post('id_status'),
-                'isi_balasan' => $this->input->post('isi_balasan'),
-                'konfirmasi' => '1'
+                'isi_balasan' => $this->input->post('isi_balasan')
             ];
 
             $this->Tanggapan_model->insert($data);
