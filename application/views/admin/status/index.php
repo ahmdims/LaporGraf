@@ -74,7 +74,7 @@
                             <tbody class="fw-semibold text-gray-600">
                                 <?php foreach ($status_list as $s): ?>
                                     <tr>
-                                        <td><?= $s->id_status; ?></td>
+                                        <td>#<?= $s->id_status; ?></td>
                                         <td><?= htmlspecialchars($s->status); ?></td>
                                         <td><span
                                                 class="badge badge-light-primary"><?= htmlspecialchars($s->petugas); ?></span>

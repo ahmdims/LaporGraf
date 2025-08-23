@@ -74,7 +74,7 @@
                             <tbody class="fw-semibold text-gray-600">
                                 <?php foreach ($kategori_list as $k): ?>
                                     <tr>
-                                        <td><?= $k->id_kategori; ?></td>
+                                        <td>#<?= $k->id_kategori; ?></td>
                                         <td><?= htmlspecialchars($k->nama_kategori); ?></td>
                                         <td><span
                                                 class="badge badge-light-primary"><?= htmlspecialchars($k->petugas); ?></span>
