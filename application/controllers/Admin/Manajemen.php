@@ -48,10 +48,12 @@ class Manajemen extends CI_Controller
                 'nama' => $this->input->post('nama'),
                 'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
                 'jk' => $this->input->post('jk'),
-                'role' => 'Manajemen',
-                'keterangan' => $this->input->post('keterangan')
+                'role' => 'manajemen',
+                'keterangan' => $this->input->post('keterangan'),
+                'no_telp' => $this->input->post('no_telp'),
+                'alamat' => $this->input->post('alamat')
             ];
-            $this->User_model->insert('guru', $data);
+            $this->User_model->create_user($data, 'guru');
             $this->session->set_flashdata('success', 'Akun manajemen berhasil dibuat!');
             redirect('admin/manajemen');
         }
@@ -60,8 +62,13 @@ class Manajemen extends CI_Controller
     public function edit($user_id)
     {
         $data['title'] = 'Ubah Manajemen';
-        $data['user'] = $this->User_model->get_user_by_id('guru', $user_id);
+        $data['user'] = $this->User_model->get_user_by_id($user_id, 'manajemen');
         $data['unit_list'] = $this->Admin_model->get_all_unit();
+
+        if (empty($data['user'])) {
+            show_404();
+        }
+
         $this->load->view('templates/header', $data);
         $this->load->view('admin/manajemen/edit', $data);
         $this->load->view('templates/footer');
@@ -78,12 +85,14 @@ class Manajemen extends CI_Controller
             $data = [
                 'nama' => $this->input->post('nama'),
                 'jk' => $this->input->post('jk'),
-                'keterangan' => $this->input->post('keterangan')
+                'keterangan' => $this->input->post('keterangan'),
+                'no_telp' => $this->input->post('no_telp'),
+                'alamat' => $this->input->post('alamat')
             ];
             if ($this->input->post('password')) {
                 $data['password'] = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
             }
-            $this->User_model->update('guru', $user_id, $data);
+            $this->User_model->update_user($user_id, $data, 'guru');
             $this->session->set_flashdata('success', 'Akun manajemen berhasil diperbarui!');
             redirect('admin/manajemen');
         }
@@ -92,7 +101,7 @@ class Manajemen extends CI_Controller
     public function delete($user_id)
     {
         $this->User_model->delete('guru', $user_id);
-        $this->session->set_flashdata('success', 'Akun manajemen berhasil dihapus.');
+        $this->session->set_flashdata('success', 'Akun manajemen berhasil dihapus!');
         redirect('admin/manajemen');
     }
 }

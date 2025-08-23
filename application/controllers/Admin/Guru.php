@@ -45,8 +45,7 @@ class Guru extends CI_Controller
                 'nama' => $this->input->post('nama'),
                 'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
                 'jk' => $this->input->post('jk'),
-                'role' => 'Guru',
-                'keterangan' => 'Guru',
+                'role' => 'guru',
                 'no_telp' => $this->input->post('no_telp'),
                 'alamat' => $this->input->post('alamat'),
             ];

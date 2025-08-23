@@ -1,49 +1,97 @@
-<div class="card shadow mb-4">
-    <div class="card-header">
-        <h6 class="m-0 font-weight-bold text-primary">Edit Akun Manajemen</h6>
-    </div>
-    <div class="card-body">
-        <?= form_open('admin/manajemen/update/' . $user->user_id); ?>
-        <div class="form-group">
-            <label for="user_id">NIP / ID Unik</label>
-            <input type="text" id="user_id" class="form-control" value="<?= $user->user_id; ?>" readonly>
-            <small class="form-text text-muted">ID tidak dapat diubah.</small>
+<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+    <div class="d-flex flex-column flex-column-fluid">
+        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-0">
+            <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+                <div class="page-title d-flex flex-column justify-content-center me-3">
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
+                        Ubah Manajemen
+                    </h1>
+                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                        <li class="breadcrumb-item text-muted">
+                            <a href="<?= site_url('admin/dashboard'); ?>"
+                                class="text-muted text-hover-primary">Beranda</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-400 w-5px h-2px"></span>
+                        </li>
+                        <li class="breadcrumb-item text-muted">
+                            <a href="<?= site_url('admin/manajemen'); ?>" class="text-muted text-hover-primary">Data
+                                Manajemen</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-400 w-5px h-2px"></span>
+                        </li>
+                        <li class="breadcrumb-item text-muted">Edit Manajemen</li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="nama">Nama Lengkap</label>
-            <input type="text" name="nama" id="nama" class="form-control" value="<?= htmlspecialchars($user->nama); ?>"
-                required>
+        <div id="kt_app_content" class="app-content flex-column-fluid">
+            <div id="kt_app_content_container" class="app-container container-xxl">
+                <div class="card card-flush py-4">
+                    <div class="card-body pt-5">
+                        <?= form_open('admin/manajemen/update/' . $user->user_id); ?>
+
+                        <div class="mb-10 fv-row">
+                            <label class="required form-label">ID</label>
+                            <input type="text" class="form-control mb-2" value="<?= $user->user_id; ?>" readonly />
+                        </div>
+
+                        <div class="mb-10 fv-row">
+                            <label class="required form-label">Nama Lengkap</label>
+                            <input type="text" name="nama" class="form-control mb-2"
+                                value="<?= htmlspecialchars($user->nama); ?>" required />
+                        </div>
+
+                        <div class="mb-10 fv-row">
+                            <label class="form-label">Password Baru</label>
+                            <input type="password" name="password" class="form-control mb-2"
+                                placeholder="Kosongkan jika tidak diubah" />
+                        </div>
+
+                        <div class="mb-10 fv-row">
+                            <label class="required form-label">Jenis Kelamin</label>
+                            <select name="jk" class="form-select" data-control="select2" data-hide-search="true"
+                                required>
+                                <option value="L" <?= ($user->jk == 'L') ? 'selected' : ''; ?>>Laki-laki</option>
+                                <option value="P" <?= ($user->jk == 'P') ? 'selected' : ''; ?>>Perempuan</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-10 fv-row">
+                            <label class="required form-label">Unit (Keterangan)</label>
+                            <select name="keterangan" class="form-select" data-control="select2" required>
+                                <option value="">Pilih Unit</option>
+                                <?php foreach ($unit_list as $unit): ?>
+                                    <option value="<?= $unit->keterangan; ?>" <?= ($user->keterangan == $unit->keterangan) ? 'selected' : ''; ?>><?= $unit->keterangan; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="mb-10 fv-row">
+                            <label class="form-label">Nomor Telepon</label>
+                            <input type="text" name="no_telp" class="form-control mb-2"
+                                value="<?= htmlspecialchars($user->no_telp); ?>" />
+                        </div>
+
+                        <div class="mb-10 fv-row">
+                            <label class="form-label">Alamat</label>
+                            <textarea name="alamat" class="form-control mb-2" rows="3"
+                                placeholder="Masukkan alamat lengkap"><?= htmlspecialchars($user->alamat); ?></textarea>
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-5">
+                            <a href="<?= site_url('admin/manajemen'); ?>" class="btn btn-light me-2">Batal</a>
+                            <button type="submit" class="btn btn-primary">
+                                <span class="indicator-label">Update</span>
+                            </button>
+                        </div>
+
+                        <?= form_close(); ?>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="password">Password Baru</label>
-            <input type="password" name="password" id="password" class="form-control">
-            <small class="form-text text-muted">Kosongkan kolom ini jika Anda tidak ingin mengubah password.</small>
-        </div>
-
-        <div class="form-group">
-            <label for="jk">Jenis Kelamin</label>
-            <select name="jk" id="jk" class="form-control">
-                <option value="L" <?= ($user->jk == 'L') ? 'selected' : ''; ?>>Laki-laki</option>
-                <option value="P" <?= ($user->jk == 'P') ? 'selected' : ''; ?>>Perempuan</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="keterangan">Unit (Keterangan)</label>
-            <select name="keterangan" id="keterangan" class="form-control" required>
-                <option value="">-- Pilih Unit --</option>
-                <?php foreach ($unit_list as $unit): ?>
-                    <option value="<?= $unit->keterangan; ?>" <?= ($user->keterangan == $unit->keterangan) ? 'selected' : ''; ?>><?= $unit->keterangan; ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-
-        <hr>
-
-        <button type="submit" class="btn btn-primary">Update Akun</button>
-        <a href="<?= site_url('admin/manajemen'); ?>" class="btn btn-secondary">Batal</a>
-        <?= form_close(); ?>
     </div>
 </div>
