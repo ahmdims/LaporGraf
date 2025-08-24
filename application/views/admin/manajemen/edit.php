@@ -83,7 +83,7 @@
                         <div class="d-flex justify-content-end mt-5">
                             <a href="<?= site_url('admin/manajemen'); ?>" class="btn btn-light me-2">Batal</a>
                             <button type="submit" class="btn btn-primary">
-                                <span class="indicator-label">Update</span>
+                                <span class="indicator-label">Ubah</span>
                             </button>
                         </div>
 

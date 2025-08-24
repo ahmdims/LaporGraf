@@ -25,6 +25,36 @@
     <i class="ki-outline ki-arrow-up"></i>
 </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const hapusBtns = document.querySelectorAll('.btn-hapus');
+
+        hapusBtns.forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: "Data ini akan dihapus permanen!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal',
+                    customClass: {
+                        confirmButton: "btn fw-bold btn-danger",
+                        cancelButton: "btn fw-bold btn-active-light-primary",
+                    },
+                    buttonsStyling: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = btn.href;
+                    }
+                });
+            });
+        });
+    });
+</script>
+
 <script>var hostUrl = "<?= base_url('asset/'); ?>";</script>
 <script src="<?= base_url('asset/plugins/global/plugins.bundle.js'); ?>"></script>
 <script src="<?= base_url('asset/js/scripts.bundle.js'); ?>"></script>

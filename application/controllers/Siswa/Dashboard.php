@@ -24,7 +24,7 @@ class Dashboard extends CI_Controller
         $data['pengaduan_selesai'] = $this->Dashboard_model->count_pengaduan_by_user($userId, '1');
 
         $this->load->view('templates/header', $data);
-        $this->load->view('siswa/dashboard_view', $data);
+        $this->load->view('siswa/dashboard', $data);
         $this->load->view('templates/footer');
     }
 }
