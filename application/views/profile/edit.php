@@ -4,10 +4,10 @@
         <div class="col-lg-8">
             <?= form_open_multipart('profile/edit'); ?>
             <div class="mb-3 row">
-                <label for="username" class="col-sm-2 col-form-label">Username</label>
+                <label for="user_id" class="col-sm-2 col-form-label">ID</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="username" name="username"
-                        value="<?= $user['username']; ?>" readonly>
+                    <input type="text" class="form-control" id="user_id" name="user_id"
+                        value="<?= $user['user_id']; ?>" readonly>
                 </div>
             </div>
             <div class="mb-3 row">

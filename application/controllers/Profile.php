@@ -9,7 +9,7 @@ class Profile extends CI_Controller
         parent::__construct();
         $this->load->model('User_model');
         $this->load->library('form_validation');
-        if (!$this->session->userdata('username')) {
+        if (!$this->session->userdata('user_id')) {
             redirect('auth');
         }
     }
@@ -20,10 +20,10 @@ class Profile extends CI_Controller
         switch ($role) {
             case 'admin':
                 return 'templates/nav_admin';
-            case 'guru':
-                return 'templates/nav_guru';
             case 'manajemen':
                 return 'templates/nav_manajemen';
+            case 'guru':
+                return 'templates/nav_guru';
             case 'siswa':
                 return 'templates/nav_siswa';
             default:
@@ -33,7 +33,7 @@ class Profile extends CI_Controller
 
     public function index()
     {
-        $data['user'] = $this->User_model->get_user_by_username($this->session->userdata('username'));
+        $data['user'] = $this->User_model->get_user_by_id($this->session->userdata('user_id'));
         $data['title'] = 'Profil Saya';
         $nav_view = $this->_get_nav_view();
 
@@ -50,7 +50,7 @@ class Profile extends CI_Controller
         $this->form_validation->set_rules('nama', 'Nama Lengkap', 'required|trim');
 
         if ($this->form_validation->run() == false) {
-            $data['user'] = $this->User_model->get_user_by_username($this->session->userdata('username'));
+            $data['user'] = $this->User_model->get_user_by_id($this->session->userdata('user_id'));
             $data['title'] = 'Ubah Profil';
             $nav_view = $this->_get_nav_view();
 
@@ -61,7 +61,7 @@ class Profile extends CI_Controller
             $this->load->view('profile/edit', $data);
             $this->load->view('templates/footer');
         } else {
-            $this->User_model->update_profile($this->session->userdata('username'));
+            $this->User_model->update_profile($this->session->userdata('user_id'));
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Profil berhasil diubah!</div>');
             redirect('profile');
         }
@@ -69,7 +69,7 @@ class Profile extends CI_Controller
 
     public function change_password()
     {
-        $data['user'] = $this->User_model->get_user_by_username($this->session->userdata('username'));
+        $data['user'] = $this->User_model->get_user_by_id($this->session->userdata('user_id'));
         $data['title'] = 'Ubah Password';
         $nav_view = $this->_get_nav_view();
 
@@ -96,7 +96,7 @@ class Profile extends CI_Controller
                     redirect('profile/change_password');
                 } else {
                     $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
-                    $this->User_model->update_password($this->session->userdata('username'), $password_hash);
+                    $this->User_model->update_password($this->session->userdata('user_id'), $password_hash);
                     $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Password berhasil diubah!</div>');
                     redirect('profile');
                 }

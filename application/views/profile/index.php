@@ -15,7 +15,7 @@
                     <h5 class="card-title">
                         <?= $user['nama_siswa'] ?? $user['nama_guru'] ?? $user['nama_manajemen'] ?? $user['nama'] ?? ''; ?>
                     </h5>
-                    <p class="card-text"><?= $user['username']; ?></p>
+                    <p class="card-text"><?= $user['user_id']; ?></p>
                     <?php if (isset($user['date_created'])): ?>
                         <p class="card-text"><small class="text-muted">Member since
                                 <?= date('d F Y', $user['date_created']); ?></small></p>

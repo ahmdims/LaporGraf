@@ -7,7 +7,8 @@
                         Hai, <?= $this->session->userdata('nama'); ?>!</h1>
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <li class="breadcrumb-item text-muted">
-                            <a href="<?= site_url('admin/dashboard'); ?>" class="text-muted text-hover-primary">Beranda</a>
+                            <a href="<?= site_url('admin/dashboard'); ?>"
+                                class="text-muted text-hover-primary">Beranda</a>
                         </li>
                     </ul>
                 </div>
@@ -17,25 +18,84 @@
             <div id="kt_app_content_container" class="app-container container-xxl">
                 <div class="row gy-5 g-xl-10">
                     <div class="col-xl-4 mb-xl-10">
-                        <div class="card bg-primary h-md-100" data-bs-theme="light">
-                            <div class="card-body d-flex flex-column pt-13 pb-14">
-                                <div class="m-0">
-                                    <h1 class="fw-semibold text-white text-center lh-lg mb-9">Delivery
-                                        is easy
-                                        <br />
-                                        <span class="fw-bolder">Start Your Delivery</span>
-                                    </h1>
-                                    <div class="flex-grow-1 bgi-no-repeat bgi-size-contain bgi-position-x-center card-rounded-bottom h-200px mh-200px my-5 mb-lg-12"
-                                        style="background-image:url('assets/media/svg/illustrations/easy/5.svg')">
+                        <div class="card card-flush h-xl-100">
+                            <div class="card-header rounded bgi-no-repeat bgi-size-cover bgi-position-y-top bgi-position-x-center align-items-start h-250px"
+                                style="background-image: url('<?= base_url('asset/media/svg/shapes/top-green.png'); ?>');"
+                                data-bs-theme="light">
+                                <h3 class="card-title align-items-start flex-column text-white pt-15">
+                                    <span class="fw-bold fs-2x mb-3">My Tasks</span>
+                                    <div class="fs-4 text-white">
+                                        <span class="opacity-75">You have</span>
+                                        <span class="position-relative d-inline-block">
+                                            <a href="../../demo23/dist/pages/user-profile/projects.html"
+                                                class="link-white opacity-75-hover fw-bold d-block mb-1">4 tasks</a>
+                                            <span
+                                                class="position-absolute opacity-50 bottom-0 start-0 border-2 border-body border-bottom w-100"></span>
+                                        </span>
+                                        <span class="opacity-75">to comlete</span>
                                     </div>
-                                </div>
-                                <div class="text-center">
-                                    <a class="btn btn-sm bg-white btn-color-gray-800 me-2"
-                                        data-bs-target="#kt_modal_bidding" data-bs-toggle="modal">New
-                                        Delivery</a>
-                                    <a class="btn btn-sm bg-white btn-color-white bg-opacity-20"
-                                        href="../../demo23/dist/pages/user-profile/projects.html">Quick
-                                        Guide</a>
+                                </h3>
+                            </div>
+                            <div class="card-body mt-n20">
+                                <div class="mt-n20 position-relative">
+                                    <div class="row g-3 g-lg-6">
+                                        <div class="col-6">
+                                            <div class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5">
+                                                <div class="symbol symbol-30px me-5 mb-8">
+                                                    <span class="symbol-label">
+                                                        <i class="ki-outline ki-book fs-1 text-primary"></i>
+                                                    </span>
+                                                </div>
+                                                <div class="m-0">
+                                                    <span
+                                                        class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1"><?= $total_siswa; ?></span>
+                                                    <span class="text-gray-500 fw-semibold fs-6">Akun Siswa</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5">
+                                                <div class="symbol symbol-30px me-5 mb-8">
+                                                    <span class="symbol-label">
+                                                        <i class="ki-outline ki-teacher fs-1 text-primary"></i>
+                                                    </span>
+                                                </div>
+                                                <div class="m-0">
+                                                    <span
+                                                        class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1"><?= $total_guru; ?></span>
+                                                    <span class="text-gray-500 fw-semibold fs-6">Akun Guru & Staf</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5">
+                                                <div class="symbol symbol-30px me-5 mb-8">
+                                                    <span class="symbol-label">
+                                                        <i class="ki-outline ki-award fs-1 text-primary"></i>
+                                                    </span>
+                                                </div>
+                                                <div class="m-0">
+                                                    <span
+                                                        class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">4,7</span>
+                                                    <span class="text-gray-500 fw-semibold fs-6">Avg. Score</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5">
+                                                <div class="symbol symbol-30px me-5 mb-8">
+                                                    <span class="symbol-label">
+                                                        <i class="ki-outline ki-timer fs-1 text-primary"></i>
+                                                    </span>
+                                                </div>
+                                                <div class="m-0">
+                                                    <span
+                                                        class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">822</span>
+                                                    <span class="text-gray-500 fw-semibold fs-6">Hours Learned</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

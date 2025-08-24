@@ -3,19 +3,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class User_model extends CI_Model
 {
-    public function get_user_by_username($username)
+    public function get_user_by_id($user_id)
     {
         $role = $this->session->userdata('role');
         $table = '';
+
         switch ($role) {
             case 'admin':
-                $table = 'admin';
-                break;
-            case 'guru':
                 $table = 'guru';
                 break;
             case 'manajemen':
-                $table = 'manajemen';
+                $table = 'guru';
+                break;
+            case 'guru':
+                $table = 'guru';
                 break;
             case 'siswa':
                 $table = 'siswa';
@@ -23,30 +24,32 @@ class User_model extends CI_Model
             default:
                 return null;
         }
-        return $this->db->get_where($table, ['username' => $username])->row_array();
+
+        return $this->db->get_where($table, ['user_id' => $user_id])->row_array();
     }
 
-    public function update_profile($username)
+    public function update_profile($user_id)
     {
         $role = $this->session->userdata('role');
         $table = '';
         $nama_field = '';
+
         switch ($role) {
             case 'admin':
-                $table = 'admin';
+                $table = 'guru';
                 $nama_field = 'nama';
                 break;
             case 'guru':
                 $table = 'guru';
-                $nama_field = 'nama_guru';
+                $nama_field = 'nama';
                 break;
             case 'manajemen':
-                $table = 'manajemen';
-                $nama_field = 'nama_manajemen';
+                $table = 'guru';
+                $nama_field = 'nama';
                 break;
             case 'siswa':
                 $table = 'siswa';
-                $nama_field = 'nama_siswa';
+                $nama_field = 'nama';
                 break;
             default:
                 return false;
@@ -56,24 +59,25 @@ class User_model extends CI_Model
             $nama_field => htmlspecialchars($this->input->post('nama', true)),
         ];
 
-        $this->db->where('username', $username);
+        $this->db->where('user_id', $user_id);
         $this->db->update($table, $data);
         return $this->db->affected_rows();
     }
 
-    public function update_password($username, $password_hash)
+    public function update_password($user_id, $password_hash)
     {
         $role = $this->session->userdata('role');
         $table = '';
+
         switch ($role) {
             case 'admin':
-                $table = 'admin';
+                $table = 'guru';
                 break;
             case 'guru':
                 $table = 'guru';
                 break;
             case 'manajemen':
-                $table = 'manajemen';
+                $table = 'guru';
                 break;
             case 'siswa':
                 $table = 'siswa';
@@ -81,8 +85,9 @@ class User_model extends CI_Model
             default:
                 return false;
         }
+
         $this->db->set('password', $password_hash);
-        $this->db->where('username', $username);
+        $this->db->where('user_id', $user_id);
         $this->db->update($table);
         return $this->db->affected_rows();
     }
@@ -95,24 +100,6 @@ class User_model extends CI_Model
             $this->db->where('role', $role);
             return $this->db->get('guru')->result();
         }
-    }
-
-    public function get_user_by_id($user_id, $role = null)
-    {
-        if ($role === 'siswa') {
-            $this->db->from('siswa');
-        } else {
-            $this->db->from('guru');
-        }
-
-        $this->db->where('user_id', $user_id);
-
-        if ($role && $role !== 'siswa') {
-            $this->db->where('role', $role);
-        }
-
-        $query = $this->db->get();
-        return $query->row();
     }
 
     public function delete_user($user_id, $role)

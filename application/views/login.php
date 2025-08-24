@@ -48,7 +48,7 @@
                     <div class="d-flex flex-center flex-column align-items-stretch h-lg-100 w-md-400px">
                         <div class="d-flex flex-center flex-column flex-column-fluid pb-15 pb-lg-20">
 
-                            <?= form_open('auth/process_login', ['class' => 'form w-100', 'id' => 'kt_sign_in_form', 'novalidate' => 'novalidate']); ?>
+                            <?= form_open('auth/process_login', ['class' => 'form w-100']); ?>
 
                             <div class="text-center mb-11">
                                 <h1 class="text-dark fw-bolder mb-3">Masuk LaporGraf</h1>
