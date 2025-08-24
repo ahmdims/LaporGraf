@@ -32,31 +32,22 @@ class User_model extends CI_Model
     {
         $role = $this->session->userdata('role');
         $table = '';
-        $nama_field = '';
 
         switch ($role) {
             case 'admin':
-                $table = 'guru';
-                $nama_field = 'nama';
-                break;
+            case 'manajemen':
             case 'guru':
                 $table = 'guru';
-                $nama_field = 'nama_guru';
-                break;
-            case 'manajemen':
-                $table = 'guru';
-                $nama_field = 'nama_manajemen';
                 break;
             case 'siswa':
                 $table = 'siswa';
-                $nama_field = 'nama_siswa';
                 break;
             default:
                 return false;
         }
 
         $data = [
-            $nama_field => htmlspecialchars($this->input->post('nama', true)),
+            'nama' => htmlspecialchars($this->input->post('nama', true)),
             'jk' => $this->input->post('jk', true),
             'no_telp' => $this->input->post('no_telp', true),
             'alamat' => $this->input->post('alamat', true),
@@ -86,11 +77,7 @@ class User_model extends CI_Model
 
         switch ($role) {
             case 'admin':
-                $table = 'guru';
-                break;
             case 'guru':
-                $table = 'guru';
-                break;
             case 'manajemen':
                 $table = 'guru';
                 break;
