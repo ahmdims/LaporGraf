@@ -25,7 +25,8 @@
                         <div class="d-flex flex-wrap flex-sm-nowrap">
                             <div class="me-7 mb-4">
                                 <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                                    <img src="asset/media/avatars/300-1.jpg" alt="image" />
+                                    <img src="<?= base_url(!empty($user['foto_profil']) ? 'uploads/' . $user['foto_profil'] : 'asset/media/avatars/null.png'); ?>"
+                                        alt="<?= $user['nama_siswa'] ?? $user['nama_guru'] ?? $user['nama_manajemen'] ?? $user['nama'] ?? ''; ?>" />
                                 </div>
                             </div>
                             <div class="flex-grow-1">

@@ -67,16 +67,16 @@
                                     <div class="cursor-pointer position-relative symbol symbol-circle symbol-40px"
                                         data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
                                         data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-                                        <img src="https://ui-avatars.com/api/?name=<?= $this->session->userdata('nama'); ?>&background=4e73df&color=fff"
-                                            alt="user" />
+                                        <img src="<?= base_url(!empty($this->session->userdata('foto_profil')) ? 'uploads/' . $this->session->userdata('foto_profil') : 'asset/media/avatars/null.png'); ?>"
+                                            alt="<?= $this->session->userdata('nama'); ?>">
                                     </div>
                                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
                                         data-kt-menu="true">
                                         <div class="menu-item px-3">
                                             <div class="menu-content d-flex align-items-center px-3">
                                                 <div class="symbol symbol-50px me-5">
-                                                    <img alt="Logo"
-                                                        src="https://ui-avatars.com/api/?name=<?= $this->session->userdata('nama'); ?>&background=4e73df&color=fff" />
+                                                    <img src="<?= base_url(!empty($this->session->userdata('foto_profil')) ? 'uploads/' . $this->session->userdata('foto_profil') : 'asset/media/avatars/null.png'); ?>"
+                                                        alt="<?= $this->session->userdata('nama'); ?>">
                                                 </div>
                                                 <div class="d-flex flex-column">
                                                     <div class="fw-bold d-flex align-items-center fs-5">
