@@ -78,10 +78,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+                <div class="card card-flush" id="kt_profile_details_view">
                     <div class="card-header cursor-pointer">
                         <div class="card-title m-0">
-                            <h3 class="fw-bold m-0">Profile Details</h3>
+                            <h3 class="fw-bold m-0">Detail Profil</h3>
                         </div>
                         <a href="<?= base_url('profile/edit'); ?>" class="btn btn-sm btn-primary align-self-center">
                             Ubah Profile
@@ -102,7 +102,7 @@
                                 <span class="fw-semibold text-gray-800 fs-6">
                                     <?= isset($user['jk'])
                                         ? ($user['jk'] == 'L' ? 'Laki-laki' : 'Perempuan')
-                                        : '-'; ?>
+                                        : ''; ?>
                                 </span>
                             </div>
                         </div>
