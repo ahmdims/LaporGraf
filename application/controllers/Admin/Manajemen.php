@@ -62,8 +62,10 @@ class Manajemen extends CI_Controller
     public function edit($user_id)
     {
         $data['title'] = 'Ubah Manajemen';
-        $data['user'] = $this->User_model->get_user_by_id($user_id, 'manajemen');
+        $user_data = $this->User_model->get_user_by_id($user_id, 'manajemen');
         $data['unit_list'] = $this->Admin_model->get_all_unit();
+
+        $data['user'] = (object) $user_data;
 
         if (empty($data['user'])) {
             show_404();

@@ -59,7 +59,9 @@ class Siswa extends CI_Controller
     public function edit($user_id)
     {
         $data['title'] = 'Ubah Siswa';
-        $data['user'] = $this->User_model->get_user_by_id($user_id, 'siswa');
+        $user_data = $this->User_model->get_user_by_id($user_id, 'siswa');
+
+        $data['user'] = (object) $user_data;
 
         if (empty($data['user'])) {
             show_404();
