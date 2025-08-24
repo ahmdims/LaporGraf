@@ -28,12 +28,20 @@ class User_model extends CI_Model
         return $this->db->get_where($table, ['user_id' => $user_id])->row_array();
     }
 
+    public function get_users_by_role($role)
+    {
+        $table = ($role === 'siswa') ? 'siswa' : 'guru';
+        return $this->db->get_where($table, ['role' => $role])->result();
+    }
+
     public function get_user_by_id($user_id, $role)
     {
-        if ($role !== 'siswa' && $role !== 'guru') {
-            return null;
+        if ($role === 'siswa') {
+            return $this->db->get_where('siswa', ['user_id' => $user_id])->row();
+        } elseif ($role === 'guru' || $role === 'manajemen' || $role === 'admin') {
+            return $this->db->get_where('guru', ['user_id' => $user_id])->row();
         }
-        return $this->db->get_where($role, ['user_id' => $user_id])->row_array();
+        return null;
     }
 
     public function update_profile($user_id)
@@ -100,16 +108,6 @@ class User_model extends CI_Model
         $this->db->where('user_id', $user_id);
         $this->db->update($table);
         return $this->db->affected_rows();
-    }
-
-    public function get_users_by_role($role)
-    {
-        if ($role === 'siswa') {
-            return $this->db->get('siswa')->result();
-        } else {
-            $this->db->where('role', $role);
-            return $this->db->get('guru')->result();
-        }
     }
 
     public function delete_user($user_id, $role)
