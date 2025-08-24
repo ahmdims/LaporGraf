@@ -92,7 +92,7 @@ class Status extends CI_Controller
             $this->session->set_flashdata('error', 'Akses ditolak.');
         } else {
             $this->Status_model->delete($id);
-            $this->session->set_flashdata('success', 'Status berhasil dihapus.');
+            $this->session->set_flashdata('success', 'Status berhasil dihapus!');
         }
         redirect('manajemen/status');
     }

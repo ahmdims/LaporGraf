@@ -95,7 +95,7 @@ class Kategori extends CI_Controller
         if (!$kategori || $kategori->petugas != $unit) {
         } else {
             $this->Kategori_model->delete($id);
-            $this->session->set_flashdata('success', 'Kategori berhasil dihapus.');
+            $this->session->set_flashdata('success', 'Kategori berhasil dihapus!');
         }
         redirect('manajemen/kategori');
     }

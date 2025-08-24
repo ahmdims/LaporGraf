@@ -19,6 +19,7 @@ class Pengaduan extends CI_Controller
     public function index()
     {
         $data['title'] = 'Daftar Pengaduan Masuk';
+        $data['unit'] = $this->session->userdata('keterangan');
         $unit = $this->session->userdata('keterangan');
         $data['pengaduan_list'] = $this->Manajemen_model->get_pengaduan_by_unit($unit);
 
