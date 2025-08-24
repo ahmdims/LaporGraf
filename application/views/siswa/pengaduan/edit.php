@@ -15,8 +15,8 @@
                             <span class="bullet bg-gray-400 w-5px h-2px"></span>
                         </li>
                         <li class="breadcrumb-item text-muted">
-                            <a href="<?= site_url('siswa/pengaduan'); ?>"
-                                class="text-muted text-hover-primary">Data Laporan</a>
+                            <a href="<?= site_url('siswa/pengaduan'); ?>" class="text-muted text-hover-primary">Data
+                                Laporan</a>
                         </li>
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-400 w-5px h-2px"></span>
@@ -45,6 +45,7 @@
                             <div class="col-md-6">
                                 <label class="form-label">Tempat</label>
                                 <input type="text" class="form-control mb-2" name="tempat"
+                                    placeholder="Masukkan lokasi"
                                     value="<?= htmlspecialchars($pengaduan->tempat); ?>">
                             </div>
                             <div class="col-md-6">

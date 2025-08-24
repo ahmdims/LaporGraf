@@ -99,29 +99,15 @@ class Pengaduan extends CI_Controller
 
     public function update($id)
     {
-        $userId = $this->session->userdata('user_id');
-        $pengaduan = $this->Pengaduan_model->get_valid_pengaduan_for_edit_delete($id, $userId);
+        $data = [
+            'judul' => $this->input->post('judul'),
+            'deskripsi' => $this->input->post('deskripsi'),
+            'tempat' => $this->input->post('tempat'),
+        ];
 
-        if (!$pengaduan) {
-            $this->session->set_flashdata('error', 'Gagal memperbarui: Pengaduan tidak ditemukan atau sudah ditanggapi.');
-            redirect('siswa/pengaduan');
-        }
-
-        $this->form_validation->set_rules('judul', 'Judul', 'required');
-        $this->form_validation->set_rules('deskripsi', 'Deskripsi', 'required');
-
-        if ($this->form_validation->run() == FALSE) {
-            $this->edit($id);
-        } else {
-            $data = [
-                'judul' => $this->input->post('judul'),
-                'deskripsi' => $this->input->post('deskripsi'),
-            ];
-
-            $this->Pengaduan_model->update($id, $data);
-            $this->session->set_flashdata('success', 'Pengaduan berhasil diperbarui!');
-            redirect('siswa/pengaduan');
-        }
+        $this->Pengaduan_model->update($id, $data);
+        $this->session->set_flashdata('success', 'Pengaduan berhasil diperbarui!');
+        redirect('siswa/pengaduan');
     }
 
     public function delete($id)
