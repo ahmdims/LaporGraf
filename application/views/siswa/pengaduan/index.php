@@ -17,6 +17,11 @@
                         <li class="breadcrumb-item text-muted">Data Laporan</li>
                     </ul>
                 </div>
+                <div class="d-flex align-items-center gap-2 gap-lg-3">
+                    <a href="<?= site_url('siswa/pengaduan/create'); ?>" class="btn btn-sm fw-bold btn-primary">
+                        <i class="ki-outline ki-plus fs-2"></i>Buat Laporan
+                    </a>
+                </div>
             </div>
         </div>
         <div id="kt_app_content" class="app-content flex-column-fluid">
