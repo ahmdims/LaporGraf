@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use PhpOffice\PhpSpreadsheet\IOFactory;
+
 class Guru extends CI_Controller
 {
 
@@ -91,8 +93,75 @@ class Guru extends CI_Controller
 
     public function delete($user_id)
     {
-        $this->User_model->delete('guru', $user_id);
+        $this->User_model->delete_user($user_id, 'guru');
         $this->session->set_flashdata('success', 'Akun guru berhasil dihapus!');
         redirect('admin/guru');
+    }
+
+    public function import()
+    {
+        $data['title'] = 'Import Siswa';
+        $this->load->view('templates/header', $data);
+        $this->load->view('admin/guru/import', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function upload()
+    {
+        $config['upload_path'] = './uploads/';
+        $config['allowed_types'] = 'xlsx|xls';
+        $config['file_name'] = 'doc' . time();
+
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('import_file')) {
+            $this->session->set_flashdata('error', $this->upload->display_errors());
+            redirect('admin/import');
+        } else {
+            $fileData = $this->upload->data();
+            $filePath = $fileData['full_path'];
+
+            try {
+                $spreadsheet = IOFactory::load($filePath);
+                $sheetData = $spreadsheet->getActiveSheet()->toArray();
+
+                $insertData = [];
+                $numRow = 0;
+
+                foreach ($sheetData as $row) {
+                    if ($numRow >= 3) {
+                        $user_id = $row[0];
+
+                        $exists = $this->User_model->get_user_by_id($user_id, 'guru');
+                        if (!$exists) {
+                            $insertData[] = [
+                                'user_id' => $row[0],
+                                'nama' => $row[1],
+                                'password' => password_hash($row[2], PASSWORD_DEFAULT),
+                                'jk' => $row[3],
+                                'role' => 'guru',
+                                'no_telp' => isset($row[4]) && !empty($row[4]) ? $row[4] : null,
+                                'alamat' => isset($row[5]) && !empty($row[5]) ? $row[5] : null,
+                            ];
+                        }
+                    }
+                    $numRow++;
+                }
+
+                if (!empty($insertData)) {
+                    $this->User_model->insert_batch_users($insertData, 'guru');
+                    $this->session->set_flashdata('success', 'Data berhasil diimport');
+                } else {
+                    $this->session->set_flashdata('warning', 'Tidak ada data baru yang diimport');
+                }
+
+            } catch (Exception $e) {
+                $this->session->set_flashdata('error', 'Error membaca file: ' . $e->getMessage());
+            }
+
+            unlink($filePath);
+
+            redirect('admin/guru');
+        }
     }
 }

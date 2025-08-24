@@ -18,6 +18,9 @@
                     </ul>
                 </div>
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
+                    <a href="<?= site_url('admin/guru/import') ?>" class="btn btn-sm btn-light-primary ms-3">
+                        <i class="ki-duotone ki-cloud-upload fs-2"></i>Import dari Excel
+                    </a>
                     <a href="<?= site_url('admin/guru/create'); ?>" class="btn btn-sm fw-bold btn-primary">
                         <i class="ki-outline ki-plus fs-2"></i>Tambah Guru
                     </a>

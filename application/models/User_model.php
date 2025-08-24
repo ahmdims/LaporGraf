@@ -140,4 +140,9 @@ class User_model extends CI_Model
             return $this->db->update('guru', $data);
         }
     }
+
+    public function insert_batch_users($data, $table)
+    {
+        return $this->db->insert_batch($table, $data);
+    }
 }
