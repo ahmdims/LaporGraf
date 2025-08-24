@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class User_model extends CI_Model
 {
-    public function get_user_by_id($user_id)
+    public function get_user_by_session($user_id)
     {
         $role = $this->session->userdata('role');
         $table = '';
@@ -26,6 +26,14 @@ class User_model extends CI_Model
         }
 
         return $this->db->get_where($table, ['user_id' => $user_id])->row_array();
+    }
+
+    public function get_user_by_id($user_id, $role)
+    {
+        if ($role !== 'siswa' && $role !== 'guru') {
+            return null;
+        }
+        return $this->db->get_where($role, ['user_id' => $user_id])->row_array();
     }
 
     public function update_profile($user_id)

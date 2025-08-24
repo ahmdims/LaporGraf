@@ -33,7 +33,7 @@ class Profile extends CI_Controller
 
     public function index()
     {
-        $data['user'] = $this->User_model->get_user_by_id($this->session->userdata('user_id'));
+        $data['user'] = $this->User_model->get_user_by_session($this->session->userdata('user_id'));
         $data['title'] = 'Profil Saya';
         $nav_view = $this->_get_nav_view();
 
@@ -50,7 +50,7 @@ class Profile extends CI_Controller
         $this->form_validation->set_rules('nama', 'Nama', 'required|trim');
 
         if ($this->form_validation->run() == false) {
-            $data['user'] = $this->User_model->get_user_by_id($this->session->userdata('user_id'));
+            $data['user'] = $this->User_model->get_user_by_session($this->session->userdata('user_id'));
             $data['title'] = 'Ubah Profil';
             $nav_view = $this->_get_nav_view();
 
@@ -86,7 +86,7 @@ class Profile extends CI_Controller
 
     public function change_password()
     {
-        $data['user'] = $this->User_model->get_user_by_id($this->session->userdata('user_id'));
+        $data['user'] = $this->User_model->get_user_by_session($this->session->userdata('user_id'));
         $data['title'] = 'Ubah Password';
         $nav_view = $this->_get_nav_view();
 

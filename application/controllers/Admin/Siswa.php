@@ -57,20 +57,22 @@ class Siswa extends CI_Controller
     }
 
     public function edit($user_id)
-    {
-        $data['title'] = 'Ubah Siswa';
-        $user_data = $this->User_model->get_user_by_id($user_id, 'siswa');
+{
+    $data['title'] = 'Ubah Siswa';
+    $user_data = $this->User_model->get_user_by_id($user_id, 'siswa');
 
-        $data['user'] = (object) $user_data;
-
-        if (empty($data['user'])) {
-            show_404();
-        }
-
-        $this->load->view('templates/header', $data);
-        $this->load->view('admin/siswa/edit', $data);
-        $this->load->view('templates/footer');
+    // FIX: Cek apakah data siswa ada sebelum dilanjutkan.
+    // Jika tidak ada, tampilkan halaman 404 Not Found.
+    if (empty($user_data)) {
+        show_404();
     }
+
+    $data['user'] = (object) $user_data;
+
+    $this->load->view('templates/header', $data);
+    $this->load->view('admin/siswa/edit', $data);
+    $this->load->view('templates/footer');
+}
 
     public function update($user_id)
     {
