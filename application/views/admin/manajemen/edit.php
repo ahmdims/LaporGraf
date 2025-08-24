@@ -39,7 +39,7 @@
                         </div>
 
                         <div class="mb-10 fv-row">
-                            <label class="required form-label">Nama Lengkap</label>
+                            <label class="required form-label">Nama</label>
                             <input type="text" name="nama" class="form-control mb-2"
                                 value="<?= htmlspecialchars($user->nama); ?>" required />
                         </div>

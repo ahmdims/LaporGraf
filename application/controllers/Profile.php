@@ -47,7 +47,7 @@ class Profile extends CI_Controller
 
     public function edit()
     {
-        $this->form_validation->set_rules('nama', 'Nama Lengkap', 'required|trim');
+        $this->form_validation->set_rules('nama', 'Nama', 'required|trim');
 
         if ($this->form_validation->run() == false) {
             $data['user'] = $this->User_model->get_user_by_id($this->session->userdata('user_id'));
@@ -55,14 +55,31 @@ class Profile extends CI_Controller
             $nav_view = $this->_get_nav_view();
 
             $this->load->view('templates/header', $data);
-            if ($nav_view) {
+            if ($nav_view)
                 $this->load->view($nav_view, $data);
-            }
             $this->load->view('profile/edit', $data);
             $this->load->view('templates/footer');
         } else {
             $this->User_model->update_profile($this->session->userdata('user_id'));
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Profil berhasil diubah!</div>');
+
+            if (!empty($_FILES['avatar']['name'])) {
+                $config['upload_path'] = './assets/media/avatars/';
+                $config['allowed_types'] = 'jpg|jpeg|png';
+                $config['file_name'] = 'avatar_' . $this->session->userdata('user_id');
+                $config['overwrite'] = true;
+
+                $this->load->library('upload', $config);
+
+                if ($this->upload->do_upload('avatar')) {
+                    $avatar_data = $this->upload->data();
+                    $this->User_model->update_user($this->session->userdata('user_id'), ['avatar' => $avatar_data['file_name']], $this->session->userdata('role'));
+                } else {
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger">' . $this->upload->display_errors() . '</div>');
+                    redirect('profile/edit');
+                }
+            }
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success">Profil berhasil diubah!</div>');
             redirect('profile');
         }
     }
@@ -82,18 +99,18 @@ class Profile extends CI_Controller
             if ($nav_view) {
                 $this->load->view($nav_view, $data);
             }
-            $this->load->view('profile/change_password', $data);
+            $this->load->view('profile/edit', $data);
             $this->load->view('templates/footer');
         } else {
             $current_password = $this->input->post('current_password');
             $new_password = $this->input->post('new_password1');
             if (!password_verify($current_password, $data['user']['password'])) {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password saat ini salah!</div>');
-                redirect('profile/change_password');
+                redirect('profile/edit');
             } else {
                 if ($current_password == $new_password) {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password baru tidak boleh sama dengan password saat ini!</div>');
-                    redirect('profile/change_password');
+                    redirect('profile/edit');
                 } else {
                     $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
                     $this->User_model->update_password($this->session->userdata('user_id'), $password_hash);

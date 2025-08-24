@@ -41,15 +41,15 @@ class User_model extends CI_Model
                 break;
             case 'guru':
                 $table = 'guru';
-                $nama_field = 'nama';
+                $nama_field = 'nama_guru';
                 break;
             case 'manajemen':
                 $table = 'guru';
-                $nama_field = 'nama';
+                $nama_field = 'nama_manajemen';
                 break;
             case 'siswa':
                 $table = 'siswa';
-                $nama_field = 'nama';
+                $nama_field = 'nama_siswa';
                 break;
             default:
                 return false;
@@ -57,7 +57,22 @@ class User_model extends CI_Model
 
         $data = [
             $nama_field => htmlspecialchars($this->input->post('nama', true)),
+            'jk' => $this->input->post('jk', true),
+            'no_telp' => $this->input->post('no_telp', true),
+            'alamat' => $this->input->post('alamat', true),
         ];
+
+        if (!empty($_FILES['avatar']['name'])) {
+            $config['upload_path'] = './assets/media/avatars/';
+            $config['allowed_types'] = 'jpg|jpeg|png';
+            $config['file_name'] = $user_id . '_' . time();
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('avatar')) {
+                $upload_data = $this->upload->data();
+                $data['avatar'] = $upload_data['file_name'];
+            }
+        }
 
         $this->db->where('user_id', $user_id);
         $this->db->update($table, $data);
