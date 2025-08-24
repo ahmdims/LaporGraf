@@ -111,45 +111,96 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card mb-5 mb-xl-10">
                     <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
-                        data-bs-target="#kt_account_deactivate" aria-expanded="true"
-                        aria-controls="kt_account_deactivate">
+                        data-bs-target="#kt_account_signin_method">
                         <div class="card-title m-0">
                             <h3 class="fw-bold m-0">Ubah Password</h3>
                         </div>
                     </div>
-                    <div class="collapse show">
+
+                    <div id="kt_account_settings_profile_details" class="collapse show">
                         <?= form_open_multipart('profile/change_password'); ?>
                         <div class="card-body border-top p-9">
-                            <div class="row mb-6">
-                                <label for="current_password" class="col-lg-4 col-form-label required fw-semibold fs-6">
-                                    Password Saat Ini</label>
-                                <div class="col-lg-8 fv-row">
-                                    <input type="password" id="current_password" name="current_password"
-                                        class="form-control form-control-lg" />
-                                    <?= form_error('current_password', '<small class="text-danger pl-3">', '</small>'); ?>
+                            <div class="row mb-6" data-kt-password-meter="true">
+                                <label class="col-lg-4 col-form-label required fw-semibold fs-6">
+                                    Password Saat Ini
+                                </label>
+
+                                <div class="col-lg-8 fv-row fv-plugins-icon-container">
+                                    <div class="position-relative mb-3">
+                                        <input type="password" name="current_password"
+                                            class="form-control form-control-lg form-control-solid"
+                                            placeholder="Masukkan password saat ini">
+
+                                        <span
+                                            class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
+                                            data-kt-password-meter-control="visibility">
+                                            <i class="ki-outline ki-eye-slash fs-2"></i>
+                                            <i class="ki-outline ki-eye fs-2 d-none"></i>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row mb-6">
-                                <label for="new_password1" class="col-lg-4 col-form-label required fw-semibold fs-6">
-                                    Password Baru</label>
-                                <div class="col-lg-8 fv-row">
-                                    <input type="password" id="new_password1" name="new_password1"
-                                        class="form-control form-control-lg" />
-                                    <?= form_error('new_password1', '<small class="text-danger pl-3">', '</small>'); ?>
+
+                            <div class="row mb-6" data-kt-password-meter="true">
+                                <label class="col-lg-4 col-form-label required fw-semibold fs-6">
+                                    Password Baru
+                                </label>
+
+                                <div class="col-lg-8 fv-row fv-plugins-icon-container">
+                                    <div class="position-relative mb-3">
+                                        <input class="form-control form-control-lg form-control-solid" type="password"
+                                            placeholder="Masukkan password baru" name="password" autocomplete="off" />
+
+                                        <span
+                                            class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
+                                            data-kt-password-meter-control="visibility">
+                                            <i class="ki-outline ki-eye-slash fs-2"></i>
+                                            <i class="ki-outline ki-eye fs-2 d-none"></i>
+                                        </span>
+                                    </div>
+
+                                    <div class="d-flex align-items-center mb-3"
+                                        data-kt-password-meter-control="highlight">
+                                        <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2">
+                                        </div>
+                                        <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2">
+                                        </div>
+                                        <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2">
+                                        </div>
+                                        <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px"></div>
+                                    </div>
+
+                                    <div class="text-muted">
+                                        Gunakan setidaknya 8 karakter dengan campuran huruf besar, angka, dan
+                                        simbol.
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row mb-6">
-                                <label for="new_password2" class="col-lg-4 col-form-label required fw-semibold fs-6">
-                                    Ulangi Password Baru</label>
-                                <div class="col-lg-8 fv-row">
-                                    <input type="password" id="new_password2" name="new_password2"
-                                        class="form-control form-control-lg" />
-                                    <?= form_error('new_password2', '<small class="text-danger pl-3">', '</small>'); ?>
+
+                            <div class="row mb-6" data-kt-password-meter="true">
+                                <label class="col-lg-4 col-form-label required fw-semibold fs-6">
+                                    Ulangi Password Baru
+                                </label>
+
+                                <div class="col-lg-8 fv-row fv-plugins-icon-container">
+                                    <div class="position-relative mb-3">
+                                        <input type="password" name="password_confirmation"
+                                            class="form-control form-control-lg form-control-solid"
+                                            placeholder="Ulangi password baru">
+
+                                        <span
+                                            class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
+                                            data-kt-password-meter-control="visibility">
+                                            <i class="ki-outline ki-eye-slash fs-2"></i>
+                                            <i class="ki-outline ki-eye fs-2 d-none"></i>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="card-footer d-flex justify-content-end py-6 px-9">
                             <a href="<?= site_url('profile'); ?>" class="btn btn-light me-2">Batal</a>
                             <button type="submit" class="btn btn-primary">

@@ -91,8 +91,8 @@ class Profile extends CI_Controller
         $nav_view = $this->_get_nav_view();
 
         $this->form_validation->set_rules('current_password', 'Password Saat Ini', 'required|trim');
-        $this->form_validation->set_rules('new_password1', 'Password Baru', 'required|trim|min_length[8]|matches[new_password2]');
-        $this->form_validation->set_rules('new_password2', 'Konfirmasi Password Baru', 'required|trim|min_length[8]|matches[new_password1]');
+        $this->form_validation->set_rules('password', 'Password Baru', 'required|trim|min_length[8]|matches[password_confirmation]');
+        $this->form_validation->set_rules('password_confirmation', 'Konfirmasi Password Baru', 'required|trim|min_length[8]|matches[password]');
 
         if ($this->form_validation->run() == false) {
             $this->load->view('templates/header', $data);
@@ -103,7 +103,7 @@ class Profile extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             $current_password = $this->input->post('current_password');
-            $new_password = $this->input->post('new_password1');
+            $new_password = $this->input->post('password');
             if (!password_verify($current_password, $data['user']['password'])) {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password saat ini salah!</div>');
                 redirect('profile/edit');
