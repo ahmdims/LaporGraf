@@ -3,6 +3,89 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class User_model extends CI_Model
 {
+    public function get_user_by_username($username)
+    {
+        $role = $this->session->userdata('role');
+        $table = '';
+        switch ($role) {
+            case 'admin':
+                $table = 'admin';
+                break;
+            case 'guru':
+                $table = 'guru';
+                break;
+            case 'manajemen':
+                $table = 'manajemen';
+                break;
+            case 'siswa':
+                $table = 'siswa';
+                break;
+            default:
+                return null;
+        }
+        return $this->db->get_where($table, ['username' => $username])->row_array();
+    }
+
+    public function update_profile($username)
+    {
+        $role = $this->session->userdata('role');
+        $table = '';
+        $nama_field = '';
+        switch ($role) {
+            case 'admin':
+                $table = 'admin';
+                $nama_field = 'nama';
+                break;
+            case 'guru':
+                $table = 'guru';
+                $nama_field = 'nama_guru';
+                break;
+            case 'manajemen':
+                $table = 'manajemen';
+                $nama_field = 'nama_manajemen';
+                break;
+            case 'siswa':
+                $table = 'siswa';
+                $nama_field = 'nama_siswa';
+                break;
+            default:
+                return false;
+        }
+
+        $data = [
+            $nama_field => htmlspecialchars($this->input->post('nama', true)),
+        ];
+
+        $this->db->where('username', $username);
+        $this->db->update($table, $data);
+        return $this->db->affected_rows();
+    }
+
+    public function update_password($username, $password_hash)
+    {
+        $role = $this->session->userdata('role');
+        $table = '';
+        switch ($role) {
+            case 'admin':
+                $table = 'admin';
+                break;
+            case 'guru':
+                $table = 'guru';
+                break;
+            case 'manajemen':
+                $table = 'manajemen';
+                break;
+            case 'siswa':
+                $table = 'siswa';
+                break;
+            default:
+                return false;
+        }
+        $this->db->set('password', $password_hash);
+        $this->db->where('username', $username);
+        $this->db->update($table);
+        return $this->db->affected_rows();
+    }
 
     public function get_users_by_role($role)
     {

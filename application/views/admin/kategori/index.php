@@ -97,8 +97,7 @@
 
                                                 <div class="menu-item px-3">
                                                     <a href="<?= site_url('admin/kategori/delete/' . $k->id_kategori); ?>"
-                                                        class="menu-link px-3"
-                                                        data-kt-ecommerce-product-filter="delete_row">
+                                                        class="menu-link px-3 btn-hapus">
                                                         Hapus
                                                     </a>
                                                 </div>

@@ -8,7 +8,8 @@
                     </h1>
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <li class="breadcrumb-item text-muted">
-                            <a href="<?= site_url('admin/dashboard'); ?>" class="text-muted text-hover-primary">Beranda</a>
+                            <a href="<?= site_url('admin/dashboard'); ?>"
+                                class="text-muted text-hover-primary">Beranda</a>
                         </li>
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-400 w-5px h-2px"></span>
@@ -93,8 +94,7 @@
 
                                                 <div class="menu-item px-3">
                                                     <a href="<?= site_url('admin/guru/delete/' . $user->user_id); ?>"
-                                                        class="menu-link px-3"
-                                                        data-kt-ecommerce-product-filter="delete_row">
+                                                        class="menu-link px-3 btn-hapus">
                                                         Hapus
                                                     </a>
                                                 </div>

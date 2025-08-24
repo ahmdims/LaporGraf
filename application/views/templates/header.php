@@ -94,7 +94,7 @@
                                         </div>
                                         <div class="separator my-2"></div>
                                         <div class="menu-item px-5">
-                                            <a href="../../demo23/dist/account/overview.html" class="menu-link px-5">
+                                            <a href="<?= base_url('profile'); ?>" class="menu-link px-5">
                                                 Profil
                                             </a>
                                         </div>
