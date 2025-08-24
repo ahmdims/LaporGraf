@@ -34,15 +34,23 @@
                         <div class="alert alert-info">
                             <strong>Perhatian!</strong> Pastikan file Excel yang Anda unggah memiliki format yang benar.
                             <br>
-                            Kolom harus berurutan: <strong>ID, Nama, Password, Jenis Kelamin (L/P), No Telepon,
+                            Kolom harus berurutan: <strong>ID, Nama, Password, Keterangan, Jenis Kelamin (L/P), No Telepon,
                                 Alamat</strong>. <br>
                             Baris pertama (header) akan dilewati.
                         </div>
 
                         <?= form_open_multipart('admin/manajemen/upload'); ?>
                         <div class="mb-10 fv-row">
-                            <label class="required form-label">Pilih File Excel</label>
-                            <input type="file" name="import_file" class="form-control mb-2" required />
+                            <label class="required form-label">Upload Excel</label>
+                            <div class="input-group">
+                                <input type="file" class="form-control" id="excel_file" name="excel_file"
+                                    accept=".xlsx,.xls" required>
+                                <a href="<?= base_url('asset/docs/manajemen.xlsx'); ?>" class="btn btn-light-success" download>
+                                    <i class="ki-outline ki-exit-down fs-2"></i> Download Template
+                                </a>
+                            </div>
+                            <span class="form-text text-muted">Hanya file dengan ekstensi <code>.xls</code> atau
+                                <code>.xlsx</code> yang diperbolehkan.</span>
                         </div>
 
                         <div class="d-flex justify-content-end mt-5">
