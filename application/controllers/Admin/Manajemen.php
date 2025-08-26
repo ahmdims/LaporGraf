@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class Manajemen extends CI_Controller
@@ -172,5 +174,39 @@ class Manajemen extends CI_Controller
 
             redirect('admin/manajemen');
         }
+    }
+
+    public function export()
+    {
+        $manajemen_data = $this->User_model->get_users_by_role('manajemen');
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'ID');
+        $sheet->setCellValue('B1', 'Nama');
+        $sheet->setCellValue('C1', 'Keterangan');
+        $sheet->setCellValue('D1', 'Jenis Kelamin');
+        $sheet->setCellValue('E1', 'No Telepon');
+        $sheet->setCellValue('F1', 'Alamat');
+
+        $row_number = 2;
+        foreach ($manajemen_data as $manajemen) {
+            $sheet->setCellValue('A' . $row_number, $manajemen->user_id);
+            $sheet->setCellValue('B' . $row_number, $manajemen->nama);
+            $sheet->setCellValue('C' . $row_number, $manajemen->keterangan);
+            $sheet->setCellValue('D' . $row_number, $manajemen->jk);
+            $sheet->setCellValue('E' . $row_number, $manajemen->no_telp);
+            $sheet->setCellValue('F' . $row_number, $manajemen->alamat);
+            $row_number++;
+        }
+
+        $filename = 'laporgraf_data_manajemen_' . date('Ymd') . '.xlsx';
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
     }
 }

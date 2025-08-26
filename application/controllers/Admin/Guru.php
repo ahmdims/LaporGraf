@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class Guru extends CI_Controller
@@ -163,5 +165,37 @@ class Guru extends CI_Controller
 
             redirect('admin/guru');
         }
+    }
+
+    public function export()
+    {
+        $guru_data = $this->User_model->get_users_by_role('guru');
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'ID');
+        $sheet->setCellValue('B1', 'Nama');
+        $sheet->setCellValue('C1', 'Jenis Kelamin');
+        $sheet->setCellValue('D1', 'No Telepon');
+        $sheet->setCellValue('E1', 'Alamat');
+
+        $row_number = 2;
+        foreach ($guru_data as $guru) {
+            $sheet->setCellValue('A' . $row_number, $guru->user_id);
+            $sheet->setCellValue('B' . $row_number, $guru->nama);
+            $sheet->setCellValue('C' . $row_number, $guru->jk);
+            $sheet->setCellValue('D' . $row_number, $guru->no_telp);
+            $sheet->setCellValue('E' . $row_number, $guru->alamat);
+            $row_number++;
+        }
+
+        $filename = 'laporgraf_data_guru_' . date('Ymd') . '.xlsx';
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
     }
 }
