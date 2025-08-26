@@ -4,11 +4,7 @@
 
 Situs web ini adalah platform yang didedikasikan untuk memfasilitasi pengaduan, memberikan saran, serta menyampaikan kritikan di antara warga Grafika. Dengan menyediakan wadah untuk berbagi pendapat, bertujuan untuk membangun lingkungan yang lebih baik dan lebih responsif bagi semua orang yang berada di Grafika.
 
-Platform pengaduan eksklusif untuk warga SMK Negeri 4 Malang! Sebuah inovasi terkini yang dirancang khusus untuk memfasilitasi kelancaran komunikasi antara siswa, guru, dan staf administrasi sekolah. LaporGraf bertujuan untuk menciptakan lingkungan yang lebih transparan, partisipatif, dan efektif dalam menangani berbagai permasalahan sehari-hari di lingkungan sekolah.
-
-Dengan menggunakan teknologi terkini, LaporGraf memberikan akses cepat dan mudah untuk mengajukan pengaduan, memberikan umpan balik, dan memantau perkembangan tindak lanjut. Kami berkomitmen untuk meningkatkan pengalaman seluruh komunitas SMK Negeri 4 Malang dengan menyediakan sarana yang efisien dan terintegrasi.
-
-Apakah Anda menghadapi masalah akademis, permasalahan lingkungan, atau pun kendala teknis, LaporGraf hadir untuk mendengarkan dan memberikan solusi terbaik. Kami yakin bahwa kolaborasi antara pihak sekolah dan warganya adalah kunci keberhasilan pendidikan. Mari bergabung dalam menciptakan lingkungan belajar yang lebih baik dan responsif di SMK Negeri 4 Malang melalui LaporGraf!
+Platform pengaduan ini eksklusif untuk warga SMK Negeri 4 Malang. Sebuah inovasi terkini yang dirancang khusus untuk memfasilitasi kelancaran komunikasi antara siswa, guru, dan staf administrasi sekolah. LaporGraf bertujuan untuk menciptakan lingkungan yang lebih transparan, partisipatif, dan efektif dalam menangani berbagai permasalahan sehari-hari di lingkungan sekolah.
 
 ## Installation
 
@@ -17,47 +13,54 @@ This application uses the Codeigniter 3 Framework
 ### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/ahmdims/LaporGraf
-cd LaporGraf
+git clone https://github.com/ahmdims/laporgraf
+cd laporgraf
 ```
 
-### Step 2: Configure the Database
+### Step 2: Install Dependencies
+
+```bash
+composer install
+```
+
+### Step 3: Configure the Database
 
 Open the `application/config/database.php` file and update the database connection settings:
 
 ```dotenv
 $db['default'] = array(
-	'dsn' => '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'laporgraf',
+    'dsn'   => '',
+    'hostname' => 'localhost',
+    'username' => 'root',
+    'password' => '',
+    'database' => 'laporgraf',
 	'dbdriver' => 'mysqli',
-	'dbprefix' => '',
-	'pconnect' => FALSE,
-	'db_debug' => (ENVIRONMENT !== 'production'),
-	'cache_on' => FALSE,
-	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
-	'swap_pre' => '',
-	'encrypt' => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE
+    // ...
 );
 ```
 
-### Step 3: Start the Development Server
+### Step 4: Configure the Application
 
-```bash
-php artisan serve
-```
+1. **Base URL**: Open the file `application/config/config.php`. Adjust the value of `$config['base_url']` according to your project URL on the local server.
 
-Your LaporGraf application should now be up and running. You can access it at `http://localhost/laporgraf`.
+   ```php
+   $config['base_url'] = 'http://localhost/laporgraf/';
+   ```
 
-### Step 4: Tes Login
+2. **Composer Autoload**: In the same file (`application/config/config.php`), find the line `$config['composer_autoload']` and set its value to `TRUE` to automatically load libraries from Composer.
+
+   ```php
+   $config['composer_autoload'] = TRUE;
+   ```
+
+### Step 5: Run the Application
+
+1. Make sure your **Apache** and **MySQL** servers are running (e.g., through XAMPP Control Panel).
+2. Open your browser and access the URL you set in `base_url`, for example: **[http://localhost/LaporGraf](http://localhost/laporgraf)**
+
+Your LaporGraf application is now ready to use. You can access it at `http://localhost/laporgraf`.
+
+### Step 6: Tes Login
 
 ```bash
 Email: admin@example.com
