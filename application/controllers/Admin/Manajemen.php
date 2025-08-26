@@ -201,7 +201,7 @@ class Manajemen extends CI_Controller
             $row_number++;
         }
 
-        $filename = 'laporgraf_data_manajemen_' . date('Ymd') . '.xlsx';
+        $filename = 'laporgraf_data_manajemen_' . date('YmdHis') . '.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="' . $filename . '"');
         header('Cache-Control: max-age=0');
