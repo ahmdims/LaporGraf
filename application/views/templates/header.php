@@ -64,11 +64,25 @@
                         <div class="app-navbar flex-shrink-0">
                             <div class="app-navbar-item ms-1 ms-lg-3">
                                 <div class="ms-3">
-                                    <div class="cursor-pointer position-relative symbol symbol-circle symbol-40px"
+                                    <div class="d-flex align-items-center cursor-pointer position-relative"
                                         data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
                                         data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-                                        <img src="<?= base_url(!empty($this->session->userdata('foto_profil')) ? 'uploads/' . $this->session->userdata('foto_profil') : 'asset/media/avatars/null.png'); ?>"
-                                            alt="<?= $this->session->userdata('nama'); ?>">
+
+                                        <div class="d-flex flex-column text-end me-3">
+                                            <span class="fw-bold text-dark">
+                                                <?= $this->session->userdata('nama'); ?>
+                                            </span>
+                                            <span class="text-muted fs-8">
+                                                <?= $this->session->userdata('user_id'); ?>
+                                            </span>
+                                        </div>
+
+                                        <div class="symbol symbol-circle symbol-40px">
+                                            <img src="<?= base_url(!empty($this->session->userdata('foto_profil'))
+                                                ? 'uploads/' . $this->session->userdata('foto_profil')
+                                                : 'asset/media/avatars/null.png'); ?>"
+                                                alt="<?= $this->session->userdata('nama'); ?>">
+                                        </div>
                                     </div>
                                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
                                         data-kt-menu="true">
@@ -79,10 +93,10 @@
                                                         alt="<?= $this->session->userdata('nama'); ?>">
                                                 </div>
                                                 <div class="d-flex flex-column">
-                                                    <div class="fw-bold d-flex align-items-center fs-5">
+                                                    <div class="fw-bold align-items-center">
                                                         <?= $this->session->userdata('nama'); ?>
                                                         <span
-                                                            class="badge badge-light-primary fw-bold fs-8 px-2 py-1 ms-2">
+                                                            class="badge badge-light-primary fw-bold fs-8 px-2 py-1">
                                                             <?= ucwords($this->session->userdata('role')); ?>
                                                         </span>
                                                     </div>

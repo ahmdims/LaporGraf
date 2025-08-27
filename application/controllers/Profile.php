@@ -60,24 +60,32 @@ class Profile extends CI_Controller
             $this->load->view('profile/edit', $data);
             $this->load->view('templates/footer');
         } else {
-            $this->User_model->update_profile($this->session->userdata('user_id'));
+            $data = [
+                'nama' => htmlspecialchars($this->input->post('nama', true)),
+                'jk' => $this->input->post('jk', true),
+                'no_telp' => $this->input->post('no_telp', true),
+                'alamat' => $this->input->post('alamat', true),
+            ];
 
-            if (!empty($_FILES['avatar']['name'])) {
-                $config['upload_path'] = './assets/media/avatars/';
+            if (!empty($_FILES['foto_profil']['name'])) {
+                $config['upload_path'] = './uploads/profile/';
                 $config['allowed_types'] = 'jpg|jpeg|png';
-                $config['file_name'] = 'avatar_' . $this->session->userdata('user_id');
+                $config['file_name'] = 'foto_profil_' . $this->session->userdata('user_id');
                 $config['overwrite'] = true;
+                $config['max_size'] = 1024;
 
                 $this->load->library('upload', $config);
 
-                if ($this->upload->do_upload('avatar')) {
-                    $avatar_data = $this->upload->data();
-                    $this->User_model->update_user($this->session->userdata('user_id'), ['avatar' => $avatar_data['file_name']], $this->session->userdata('role'));
+                if ($this->upload->do_upload('foto_profil')) {
+                    $upload_data = $this->upload->data();
+                    $data['foto_profil'] = 'profile/' . $upload_data['file_name'];
                 } else {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger">' . $this->upload->display_errors() . '</div>');
                     redirect('profile/edit');
                 }
             }
+
+            $this->User_model->update_user($this->session->userdata('user_id'), $data, $this->session->userdata('role'));
 
             $this->session->set_flashdata('message', '<div class="alert alert-success">Profil berhasil diubah!</div>');
             redirect('profile');

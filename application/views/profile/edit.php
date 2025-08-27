@@ -35,80 +35,89 @@
                         </div>
                     </div>
                     <div class="collapse show">
-                        <?= form_open_multipart('profile/edit'); ?>
-                        <div class="card-body border-top p-9">
-                            <div class="row mb-6">
-                                <label class="col-lg-4 col-form-label fw-semibold fs-6">Avatar</label>
-                                <div class="col-lg-8">
-                                    <div class="image-input image-input-outline" data-kt-image-input="true"
-                                        style="background-image: url('assets/media/svg/avatars/blank.svg')">
-                                        <div class="image-input-wrapper w-125px h-125px"
-                                            style="background-image: url(assets/media/avatars/300-1.jpg)"></div>
-                                        <label
-                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                            data-kt-image-input-action="change" data-bs-toggle="tooltip"
-                                            title="Change avatar">
-                                            <i class="ki-outline ki-pencil fs-7"></i>
-                                            <input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
-                                            <input type="hidden" name="avatar_remove" />
-                                        </label>
-                                        <span
-                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                            data-kt-image-input-action="cancel" data-bs-toggle="tooltip"
-                                            title="Cancel avatar">
-                                            <i class="ki-outline ki-cross fs-2"></i>
-                                        </span>
-                                        <span
-                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                            data-kt-image-input-action="remove" data-bs-toggle="tooltip"
-                                            title="Remove avatar">
-                                            <i class="ki-outline ki-cross fs-2"></i>
-                                        </span>
+                        <div id="kt_account_settings_profile_details" class="collapse show">
+                            <?= form_open_multipart('profile/edit'); ?>
+                            <div class="card-body border-top p-9">
+                                <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label fw-semibold fs-6">Avatar</label>
+                                    <div class="col-lg-8">
+                                        <div class="image-input image-input-outline" data-kt-image-input="true"
+                                            style="background-image: url('<?= base_url(!empty($user['foto_profil']) ? 'uploads/' . $user['foto_profil'] : 'asset/media/avatars/null.png'); ?>')">
+
+                                            <div class="image-input-wrapper w-125px h-125px"
+                                                style="background-image: url('<?= base_url(!empty($user['foto_profil']) ? 'uploads/' . $user['foto_profil'] : 'asset/media/avatars/null.png'); ?>')">
+                                            </div>
+
+                                            <label
+                                                class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                                data-kt-image-input-action="change" data-bs-toggle="tooltip"
+                                                title="Change avatar">
+                                                <i class="ki-outline ki-pencil fs-7"></i>
+                                                <input type="file" name="foto_profil" accept=".png, .jpg, .jpeg" />
+                                                <input type="hidden" name="foto_profil_remove" />
+                                            </label>
+
+                                            <span
+                                                class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                                data-kt-image-input-action="cancel" data-bs-toggle="tooltip"
+                                                title="Cancel avatar">
+                                                <i class="ki-outline ki-cross fs-2"></i>
+                                            </span>
+
+                                            <span
+                                                class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                                data-kt-image-input-action="remove" data-bs-toggle="tooltip"
+                                                title="Remove avatar">
+                                                <i class="ki-outline ki-cross fs-2"></i>
+                                            </span>
+                                        </div>
+
+                                        <div class="form-text">Jenis berkas yang diizinkan: png, jpg, jpeg.</div>
                                     </div>
-                                    <div class="form-text">Jenis berkas yang diizinkan: png, jpg, jpeg.</div>
+                                </div>
+                                <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Nama</label>
+                                    <div class="col-lg-8 fv-row">
+                                        <input type="text" name="nama" class="form-control form-control-lg"
+                                            value="<?= $user['nama_siswa'] ?? $user['nama_guru'] ?? $user['nama_manajemen'] ?? $user['nama'] ?? ''; ?>" />
+                                        <?= form_error('nama', '<small class="text-danger pl-3">', '</small>'); ?>
+                                    </div>
+                                </div>
+                                <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Jenis
+                                        Kelamin</label>
+                                    <div class="col-lg-8 fv-row">
+                                        <select name="jk" class="form-select form-select-lg" data-control="select2"
+                                            data-hide-search="true" required>
+                                            <option value="" disabled selected>Pilih Jenis Kelamin</option>
+                                            <option value="L" <?= (isset($user['jk']) && $user['jk'] == 'L') ? 'selected' : ''; ?>>Laki-laki</option>
+                                            <option value="P" <?= (isset($user['jk']) && $user['jk'] == 'P') ? 'selected' : ''; ?>>Perempuan</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label fw-semibold fs-6">Nomor Telepon</label>
+                                    <div class="col-lg-8 fv-row">
+                                        <input type="text" name="no_telp" class="form-control form-control-lg"
+                                            value="<?= $user['no_telp'] ?? ''; ?>" />
+                                    </div>
+                                </div>
+                                <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label fw-semibold fs-6">Alamat</label>
+                                    <div class="col-lg-8 fv-row">
+                                        <textarea name="alamat" class="form-control mb-2"
+                                            rows="3"><?= $user['alamat'] ?? ''; ?></textarea>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row mb-6">
-                                <label class="col-lg-4 col-form-label required fw-semibold fs-6">Nama</label>
-                                <div class="col-lg-8 fv-row">
-                                    <input type="text" name="nama" class="form-control form-control-lg"
-                                        value="<?= $user['nama_siswa'] ?? $user['nama_guru'] ?? $user['nama_manajemen'] ?? $user['nama'] ?? ''; ?>" />
-                                    <?= form_error('nama', '<small class="text-danger pl-3">', '</small>'); ?>
-                                </div>
+                            <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                <a href="<?= site_url('profile'); ?>" class="btn btn-light me-2">Batal</a>
+                                <button type="submit" class="btn btn-primary">
+                                    Simpan Perubahan
+                                </button>
                             </div>
-                            <div class="row mb-6">
-                                <label class="col-lg-4 col-form-label required fw-semibold fs-6">Jenis Kelamin</label>
-                                <div class="col-lg-8 fv-row">
-                                    <select name="jk" class="form-select form-select-lg" data-control="select2"
-                                        data-hide-search="true" required>
-                                        <option value="" disabled selected>Pilih Jenis Kelamin</option>
-                                        <option value="L" <?= (isset($user['jk']) && $user['jk'] == 'L') ? 'selected' : ''; ?>>Laki-laki</option>
-                                        <option value="P" <?= (isset($user['jk']) && $user['jk'] == 'P') ? 'selected' : ''; ?>>Perempuan</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row mb-6">
-                                <label class="col-lg-4 col-form-label fw-semibold fs-6">Nomor Telepon</label>
-                                <div class="col-lg-8 fv-row">
-                                    <input type="text" name="no_telp" class="form-control form-control-lg"
-                                        value="<?= $user['no_telp'] ?? ''; ?>" />
-                                </div>
-                            </div>
-                            <div class="row mb-6">
-                                <label class="col-lg-4 col-form-label fw-semibold fs-6">Alamat</label>
-                                <div class="col-lg-8 fv-row">
-                                    <textarea name="alamat" class="form-control mb-2"
-                                        rows="3"><?= $user['alamat'] ?? ''; ?></textarea>
-                                </div>
-                            </div>
+                            <?= form_close(); ?>
                         </div>
-                        <div class="card-footer d-flex justify-content-end py-6 px-9">
-                            <a href="<?= site_url('profile'); ?>" class="btn btn-light me-2">Batal</a>
-                            <button type="submit" class="btn btn-primary">
-                                Simpan Perubahan
-                            </button>
-                        </div>
-                        <?= form_close(); ?>
                     </div>
                 </div>
 

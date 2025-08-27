@@ -69,18 +69,6 @@ class User_model extends CI_Model
             'alamat' => $this->input->post('alamat', true),
         ];
 
-        if (!empty($_FILES['avatar']['name'])) {
-            $config['upload_path'] = './assets/media/avatars/';
-            $config['allowed_types'] = 'jpg|jpeg|png';
-            $config['file_name'] = $user_id . '_' . time();
-            $this->load->library('upload', $config);
-
-            if ($this->upload->do_upload('avatar')) {
-                $upload_data = $this->upload->data();
-                $data['avatar'] = $upload_data['file_name'];
-            }
-        }
-
         $this->db->where('user_id', $user_id);
         $this->db->update($table, $data);
         return $this->db->affected_rows();

@@ -66,6 +66,8 @@
 <script src="<?= base_url('asset/js/custom/utilities/modals/create-app.js'); ?>"></script>
 <script src="<?= base_url('asset/js/custom/utilities/modals/users-search.js'); ?>"></script>
 
+<script src="<?= base_url('asset/js/custom/account/settings/profile-details.js'); ?>"></script>
+
 </body>
 
 </html>
